@@ -25,32 +25,32 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 export const db = getFirestore(app);
-export const auth = getAuth();
+// export const auth = getAuth();
 
 // sign up with email and password function
-export const signUpWithEmailAndPassword = (email: string, password: string) => {
-  return createUserWithEmailAndPassword(auth, email, password);
-};
+// export const signUpWithEmailAndPassword = (email: string, password: string) => {
+//   return createUserWithEmailAndPassword(auth, email, password);
+// };
 
 // sign in with email and password function
-export const loginWithEmailAndPassword = (email: string, password: string) => {
-  return signInWithEmailAndPassword(auth, email, password);
-};
+// export const loginWithEmailAndPassword = (email: string, password: string) => {
+//   return signInWithEmailAndPassword(auth, email, password);
+// };
 
 // sign in with google function
-export const signInWithGoogle = () => {
-  const provider = new GoogleAuthProvider();
-  return signInWithPopup(auth, provider);
-};
+// export const signInWithGoogle = () => {
+//   const provider = new GoogleAuthProvider();
+//   return signInWithPopup(auth, provider);
+// };
 
 // create user function
-export const createUser = async (email: string, password: string) => {
-  try {
-    const userCredential = await signUpWithEmailAndPassword(email, password);
-    const user = userCredential.user;
-    console.log("User created: ", user);
-    return user;
-  } catch (error) {
-    console.error(error);
-  }
-};
+// export const createUser = async (email: string, password: string) => {
+//   try {
+//     const userCredential = await signUpWithEmailAndPassword(email, password);
+//     const user = userCredential.user;
+//     console.log("User created: ", user);
+//     return user;
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
