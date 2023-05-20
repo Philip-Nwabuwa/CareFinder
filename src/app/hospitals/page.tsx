@@ -3,6 +3,7 @@
 import React, { useEffect, useState } from "react";
 import { onSnapshot } from "firebase/firestore";
 import { hospitalsCollectionRef } from "../lib/firebase.collection";
+import ThemeToggle from "../components/ThemeToggle";
 
 const Realtime = () => {
   const [hospitals, setHospitals] = useState<Hospital[]>([]);
@@ -28,6 +29,7 @@ const Realtime = () => {
 
   return (
     <div>
+      <ThemeToggle />
       <ul>
         {hospitals.map((hospital) => (
           <li className="m-3" key={hospital.id}>

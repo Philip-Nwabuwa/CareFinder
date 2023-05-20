@@ -1,7 +1,12 @@
+import AddHospitals from "@/app/components/AddHospital";
 import React from "react";
 
 const page = () => {
-  return <div>page</div>;
+  return (
+    <div>
+      <AddHospitals />
+    </div>
+  );
 };
 
 export default page;
