@@ -8,6 +8,8 @@ import {
 import "./globals.css";
 import { Inter } from "next/font/google";
 import { useHotkeys, useLocalStorage } from "@mantine/hooks";
+import Navbar from "./components/Navbar";
+import Footer from "./components/Footer";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -42,7 +44,11 @@ export default function RootLayout({
           withGlobalStyles
           withNormalizeCSS
         >
-          <body className={inter.className}>{children}</body>
+          <body className={inter.className}>
+            <Navbar />
+            {children}
+            <Footer links={[]} />
+          </body>
         </MantineProvider>
       </ColorSchemeProvider>
     </html>
