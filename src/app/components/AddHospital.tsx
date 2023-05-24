@@ -1,119 +1,69 @@
 "use client";
 
 import React, { useState } from "react";
-import { addDoc } from "firebase/firestore";
-import { hospitalsCollectionRef } from "../lib/firebase.collection";
+import { addHospitalToFirestore } from "../lib/firestore";
 
-const AddHospitals = () => {
-  const [name, setName] = useState("");
-  const [address, setAddress] = useState("");
-  const [phone, setPhone] = useState("");
-  const [website, setWebsite] = useState("");
-  const [state, setState] = useState("");
-  const [city, setCity] = useState("");
+const AddHospitalPage = () => {
+  const [hospitalData, setHospitalData] = useState({
+    name: "",
+    address: "",
+    content: "",
+  });
+  const [successMessage, setSuccessMessage] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-  function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
-    e.preventDefault();
-    if (
-      name === "" ||
-      address === "" ||
-      phone === "" ||
-      city === "" ||
-      state === ""
-    ) {
-      return;
+  const handleChange = (event: { target: { name: any; value: any } }) => {
+    const { name, value } = event.target;
+    setHospitalData((prevData) => ({ ...prevData, [name]: value }));
+  };
+
+  const handleSubmit = async (event: { preventDefault: () => void }) => {
+    event.preventDefault();
+    try {
+      await addHospitalToFirestore(hospitalData);
+      setSuccessMessage("Hospital added successfully.");
+      setHospitalData({ name: "", address: "", content: "" });
+    } catch (error) {
+      setErrorMessage("Failed to add hospital. Please try again.");
     }
-    addDoc(hospitalsCollectionRef, {
-      name,
-      address,
-      phone,
-      website,
-      city,
-      state,
-    })
-      .then((res) => {
-        console.log(res.id);
-      })
-      .catch((error) => {
-        console.error("Error writing document: ", error);
-      });
-
-    console.log(name, address, phone, website);
-    setName("");
-    setAddress("");
-    setPhone("");
-    setWebsite("");
-    setCity("");
-    setState("");
-  }
+  };
 
   return (
     <div>
+      <h2>Add Hospital</h2>
       <form onSubmit={handleSubmit}>
-        <label htmlFor="name">Hospital Name</label>
-        <input
-          className="m-2 p-2 rounded-md"
-          id="name"
-          type="text"
-          placeholder="Hospital Name"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />{" "}
-        <br />
-        <label htmlFor="name">Hospital Address</label>
-        <input
-          className="m-2 p-2 rounded-md"
-          id="Address"
-          type="text"
-          placeholder="Hospital Address"
-          value={address}
-          onChange={(e) => setAddress(e.target.value)}
-        />
-        <br />
-        <label htmlFor="name">Hospital Phone Number</label>
-        <input
-          className="m-2 p-2 rounded-md"
-          id="Phone"
-          type="number"
-          placeholder="Hospital Phone Number"
-          value={phone}
-          onChange={(e) => setPhone(e.target.value)}
-        />
-        <br />
-        <label htmlFor="name">Hospital Website</label>
-        <input
-          className="m-2 p-2 rounded-md"
-          id="Website"
-          type="text"
-          placeholder="Hospital Website"
-          value={website}
-          onChange={(e) => setWebsite(e.target.value)}
-        />
-        <br />
-        <label htmlFor="name">State</label>
-        <input
-          className="m-2 p-2 rounded-md"
-          id="state"
-          type="text"
-          placeholder="State"
-          value={state}
-          onChange={(e) => setState(e.target.value)}
-        />{" "}
-        <br />
-        <label htmlFor="name">City</label>
-        <input
-          className="m-2 p-2 rounded-md"
-          id="city"
-          type="text"
-          placeholder="City"
-          value={city}
-          onChange={(e) => setCity(e.target.value)}
-        />{" "}
-        <br />
+        <label>
+          Name:
+          <input
+            type="text"
+            name="name"
+            value={hospitalData.name}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Address:
+          <input
+            type="text"
+            name="address"
+            value={hospitalData.address}
+            onChange={handleChange}
+          />
+        </label>
+        <label>
+          Content (Markdown):
+          <textarea
+            name="content"
+            value={hospitalData.content}
+            onChange={handleChange}
+          />
+        </label>
         <button type="submit">Add Hospital</button>
       </form>
+      {successMessage && <p>{successMessage}</p>}
+      {errorMessage && <p>{errorMessage}</p>}
     </div>
   );
 };
 
-export default AddHospitals;
+export default AddHospitalPage;

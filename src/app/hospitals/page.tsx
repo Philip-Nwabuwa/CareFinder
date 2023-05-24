@@ -1,38 +1,37 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { onSnapshot } from "firebase/firestore";
-import { hospitalsCollectionRef } from "../lib/firebase.collection";
-import ThemeToggle from "../components/ThemeToggle";
+import React, { useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { fetchHospitals } from "../GlobalRedux/slice/hospitalSlice";
+import { RootState } from "../GlobalRedux/store";
 
-const Realtime = () => {
-  const [hospitals, setHospitals] = useState<Hospital[]>([]);
+const Hospitals = () => {
+  const dispatch = useDispatch();
+  const hospitals: Hospital[] = useSelector(
+    (state: RootState) => state.hospitals.hospitals
+  );
+  const status = useSelector((state: RootState) => state.hospitals.status);
+  const error = useSelector((state: RootState) => state.hospitals.error);
 
   useEffect(() => {
-    const unsubscribe = onSnapshot(hospitalsCollectionRef, (snapshot) => {
-      setHospitals(
-        snapshot.docs.map((doc) => ({
-          id: doc.id,
-          name: doc.data().name,
-          address: doc.data().address,
-          city: doc.data().city,
-          state: doc.data().state,
-          phone: doc.data().phone,
-          website: doc.data().website,
-        }))
-      );
-    });
-    return () => {
-      unsubscribe();
-    };
-  }, []);
+    dispatch(fetchHospitals() as any);
+  }, [dispatch]);
+
+  console.log(hospitals);
+
+  if (status === "loading") {
+    return <div>Loading hospitals...</div>;
+  }
+
+  if (status === "failed") {
+    return <div>Error: {error}</div>;
+  }
 
   return (
     <div>
-      <ThemeToggle />
       <ul>
         {hospitals.map((hospital) => (
-          <li className="m-3" key={hospital.id}>
+          <li key={hospital.id}>
             <h2>{hospital.name}</h2>
             <p>{hospital.address}</p>
             <p>{hospital.phone}</p>
@@ -46,4 +45,4 @@ const Realtime = () => {
   );
 };
 
-export default Realtime;
+export default Hospitals;
