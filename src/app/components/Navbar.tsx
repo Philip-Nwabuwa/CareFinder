@@ -1,8 +1,10 @@
 "use client";
 import { useState } from "react";
 import { Dialog, Popover } from "@headlessui/react";
-import { Bars3Icon, XMarkIcon } from "@heroicons/react/24/outline";
+import { AiOutlineMenu } from "react-icons/ai";
+import { AiOutlineClose } from "react-icons/ai";
 import ThemeToggle from "./ThemeToggle";
+import Link from "next/link";
 import Image from "next/image";
 
 function Navbar() {
@@ -11,13 +13,15 @@ function Navbar() {
   return (
     <header>
       <nav
-        className="mx-auto flex max-w-7xl items-center justify-between p-6 lg:px-8"
+        className="mx-auto flex max-w-7xl items-center justify-between p-2 lg:px-8"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <Image width={20} height={20} src="/hospital.png" alt="Logo" />
+            <Link href="/">
+              <Image width={50} height={50} src="/hospital.png" alt="Logo" />
+            </Link>
           </a>
         </div>
         <div className="flex lg:hidden">
@@ -27,22 +31,22 @@ function Navbar() {
             onClick={() => setMobileMenuOpen(true)}
           >
             <span className="sr-only">Open main menu</span>
-            <Bars3Icon className="h-6 w-6" aria-hidden="true" />
+            <AiOutlineMenu className="h-6 w-6" aria-hidden="true" />
           </button>
         </div>
-        <Popover.Group className="hidden lg:flex lg:gap-x-12">
-          <a href="#" className="text-sm font-semibold leading-6 ">
-            Features
-          </a>
-          <a href="#" className="text-sm font-semibold leading-6 ">
-            Marketplace
-          </a>
+        <Popover.Group className="hidden lg:flex lg:gap-x-12 items-center">
+          <Link href="#" className="text-sm font-semibold leading-6 ">
+            Documentaion
+          </Link>
+          <Link href="#" className="text-sm font-semibold leading-6 ">
+            About
+          </Link>
           <ThemeToggle />
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          <a href="#" className="text-sm font-semibold leading-6 ">
+          <Link href="/login" className="text-sm font-semibold leading-6 ">
             Log in
-          </a>
+          </Link>
         </div>
       </nav>
       <Dialog
@@ -64,7 +68,7 @@ function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
             >
               <span className="sr-only">Close menu</span>
-              <XMarkIcon className="h-6 w-6" aria-hidden="true" />
+              <AiOutlineClose className="h-6 w-6" aria-hidden="true" />
             </button>
           </div>
           <div className="mt-6 flow-root">

@@ -1,13 +1,5 @@
-"use client";
-
-import GoogleBtn from "@/app/components/Btn/GoogleBtn";
-import TwitterBtn from "@/app/components/Btn/TwitterBtn";
 import Link from "next/link";
 import React from "react";
-import {
-  GoogleLoginButton,
-  TwitterLoginButton,
-} from "react-social-login-buttons";
 
 const page = () => {
   return (
@@ -19,7 +11,7 @@ const page = () => {
           alt="Your Company"
         />
         <h2 className="mt-10 text-center text-2xl font-bold leading-9 tracking-tight">
-          Sign in to your account
+          Register
         </h2>
       </div>
 
@@ -52,14 +44,6 @@ const page = () => {
               >
                 Password
               </label>
-              <div className="text-sm">
-                <a
-                  href="#"
-                  className="font-semibold text-indigo-600 hover:text-indigo-500"
-                >
-                  Forgot password?
-                </a>
-              </div>
             </div>
             <div className="mt-2">
               <input
@@ -78,23 +62,18 @@ const page = () => {
               type="submit"
               className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
-              Sign in
+              Register
             </button>
           </div>
         </form>
 
-        <div className="flex flex-col md:flex-row">
-          <GoogleBtn />
-          <TwitterBtn />
-        </div>
-
         <p className="mt-10 text-center text-sm text-gray-500">
-          Not a member?{" "}
+          Already have an account?{" "}
           <Link
-            href="./register"
+            href="./login"
             className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
           >
-            Register
+            Login
           </Link>
         </p>
       </div>

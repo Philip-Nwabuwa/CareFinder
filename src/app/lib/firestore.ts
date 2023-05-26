@@ -57,12 +57,21 @@ export const fetchHospitalsFromFirestore = async (): Promise<
 };
 
 // Add a new hospital to Firestore
+// Add a new hospital to Firestore
 export const addHospitalToFirestore = async (
-  hospital: DocumentData
+  hospitalData: Record<string, string>
 ): Promise<void> => {
   try {
-    const hospitalsCollection = collection(db, "hospital");
-    await addDoc(hospitalsCollection, hospital);
+    const hospitalsCollection = collection(db, "hospitals");
+
+    await addDoc(hospitalsCollection, {
+      name: hospitalData.hospitalName,
+      address: hospitalData.address,
+      phoneNumber: hospitalData.phoneNumber,
+      email: hospitalData.email,
+      markdown: hospitalData.markdownInput,
+      createdAt: new Date(),
+    });
   } catch (error) {
     throw new Error("Failed to add hospital to Firestore.");
   }
