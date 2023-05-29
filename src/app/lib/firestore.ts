@@ -1,4 +1,3 @@
-// firebase.config.ts
 import { initializeApp } from "firebase/app";
 import {
   getFirestore,
@@ -9,24 +8,21 @@ import {
   QuerySnapshot,
   DocumentData,
 } from "firebase/firestore";
+import { getAuth } from "firebase/auth";
 
-const FIREBASE_MESSAGING_SENDER_ID = process.env.FIREBASE_MESSAGING_SENDER_ID;
-const FIREBASE_SECRET_KEY = process.env.FIREBASE_SECRET_KEY;
-const FIREBASE_APP_ID = process.env.FIREBASE_APP_ID;
 // Firebase configuration
 const firebaseConfig = {
-  apiKey: FIREBASE_SECRET_KEY,
+  apiKey: "AIzaSyBZ43SwjxDhXx5jYuPVei4RmsuPoWs1wSo",
   authDomain: "carefinder-db.firebaseapp.com",
   projectId: "carefinder-db",
   storageBucket: "carefinder-db.appspot.com",
-  messagingSenderId: FIREBASE_MESSAGING_SENDER_ID,
-  appId: FIREBASE_APP_ID,
+  messagingSenderId: "1065353021456",
+  appId: "1:1065353021456:web:87470c0842f0f4f9d5a295",
 };
 
-const firebaseApp = initializeApp(firebaseConfig);
-
-// Get Firestore instance
-const db = getFirestore(firebaseApp);
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+export const auth = getAuth();
 
 // Fetch hospitals from Firestore
 export const fetchHospitalsFromFirestore = async (): Promise<
@@ -57,24 +53,25 @@ export const fetchHospitalsFromFirestore = async (): Promise<
 };
 
 // Add a new hospital to Firestore
-// Add a new hospital to Firestore
 export const addHospitalToFirestore = async (
   hospitalData: Record<string, string>
 ): Promise<void> => {
   try {
-    const hospitalsCollection = collection(db, "hospitals");
+    const hospitalsCollection = collection(db, "hospital");
 
     await addDoc(hospitalsCollection, {
       name: hospitalData.hospitalName,
       address: hospitalData.address,
       phoneNumber: hospitalData.phoneNumber,
       email: hospitalData.email,
-      markdown: hospitalData.markdownInput,
       createdAt: new Date(),
+      city: hospitalData.city,
+      state: hospitalData.state,
+      website: hospitalData.website,
     });
   } catch (error) {
     throw new Error("Failed to add hospital to Firestore.");
   }
 };
 
-export default firebaseApp;
+export default app;

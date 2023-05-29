@@ -19,8 +19,9 @@ function Navbar() {
         <div className="flex lg:flex-1">
           <a href="#" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
-            <Link href="/">
+            <Link href="/" className="flex justify-center items-center">
               <Image width={50} height={50} src="/hospital.png" alt="Logo" />
+              <h2 className="pl-2 text-lg text-bold">Care Finder</h2>
             </Link>
           </a>
         </div>
@@ -60,7 +61,7 @@ function Navbar() {
           <div className="flex items-center justify-between">
             <a href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
-              <Image className="h-8 w-auto" src="/hospital.png" alt="Logo" />
+              <Image width={50} height={50} src="/hospital.png" alt="Logo" />
             </a>
             <button
               type="button"

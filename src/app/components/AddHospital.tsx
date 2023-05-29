@@ -1,102 +1,134 @@
 "use client";
 
-// import dependencies
-import React, { useState } from "react";
-import ReactMarkdown from "react-markdown";
+import { useState } from "react";
 import { addHospitalToFirestore } from "../lib/firestore";
 
-function AddHospital() {
-  // create state for hospital fields and markdown input
-  const [hospitalName, setHospitalName] = useState("");
-  const [address, setAddress] = useState("");
-  const [phoneNumber, setPhoneNumber] = useState("");
-  const [email, setEmail] = useState("");
-  const [markdownInput, setMarkdownInput] = useState("");
+const AddHospitalForm = () => {
+  const [hospitalData, setHospitalData] = useState({
+    hospitalName: "",
+    address: "",
+    phoneNumber: "",
+    email: "",
+    website: "",
+    state: "",
+    city: "",
+  });
+  const [errorMessage, setErrorMessage] = useState("");
+  const [successMessage, setSuccessMessage] = useState("");
 
-  const handleMarkdownInputChange = (event: {
-    target: { value: React.SetStateAction<string> };
-  }) => {
-    setMarkdownInput(event.target.value);
+  const handleInputChange = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+  ) => {
+    const { name, value } = event.target;
+    setHospitalData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const handleAddHospital = async (event: { preventDefault: () => void }) => {
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-
-    const hospitalData = {
-      hospitalName: hospitalName.trim(),
-      address: address.trim(),
-      phoneNumber: phoneNumber.trim(),
-      email: email.trim(),
-      markdownInput: markdownInput.trim(),
-    };
-
     try {
       await addHospitalToFirestore(hospitalData);
-      setHospitalName("");
-      setAddress("");
-      setPhoneNumber("");
-      setEmail("");
-      setMarkdownInput("");
+      setHospitalData({
+        hospitalName: "",
+        address: "",
+        phoneNumber: "",
+        email: "",
+        website: "",
+        state: "",
+        city: "",
+      });
+      setErrorMessage("");
+      setSuccessMessage("Hospital added successfully!");
     } catch (error) {
-      console.error("Error adding hospital data: ", error);
+      if (error instanceof Error) {
+        setErrorMessage(error.message);
+      } else {
+        setErrorMessage(String(error));
+      }
     }
   };
 
   return (
     <div>
-      <h2>Add New Hospital</h2>
-      <form onSubmit={handleAddHospital}>
-        <label>
-          Hospital Name:
+      <h2>Add a Hospital</h2>
+
+      <form onSubmit={handleSubmit} className="text-center">
+        <div>
+          <label htmlFor="hospitalName">Hospital Name:</label>
           <input
             type="text"
-            value={hospitalName}
-            onChange={(event) => setHospitalName(event.target.value)}
+            id="hospitalName"
+            name="hospitalName"
+            value={hospitalData.hospitalName}
+            onChange={handleInputChange}
           />
-        </label>
-        <br />
-        <label>
-          Address:
+        </div>
+        <div>
+          <label htmlFor="address">Address:</label>
           <input
             type="text"
-            value={address}
-            onChange={(event) => setAddress(event.target.value)}
+            id="address"
+            name="address"
+            value={hospitalData.address}
+            onChange={handleInputChange}
+          ></input>
+        </div>
+        <div>
+          <label htmlFor="phoneNumber">Phone Number:</label>
+          <input
+            type="tel"
+            id="phoneNumber"
+            name="phoneNumber"
+            value={hospitalData.phoneNumber}
+            onChange={handleInputChange}
           />
-        </label>
-        <br />
-        <label>
-          Phone Number:
+        </div>
+        <div>
+          <label htmlFor="email">Email:</label>
+          <input
+            type="email"
+            id="email"
+            name="email"
+            value={hospitalData.email}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="website">Website:</label>
+          <input
+            type="url"
+            id="website"
+            name="website"
+            value={hospitalData.website}
+            onChange={handleInputChange}
+          />
+        </div>
+        <div>
+          <label htmlFor="state">State:</label>
           <input
             type="text"
-            value={phoneNumber}
-            onChange={(event) => setPhoneNumber(event.target.value)}
+            id="state"
+            name="state"
+            value={hospitalData.state}
+            onChange={handleInputChange}
           />
-        </label>
-        <br />
-        <label>
-          Email:
+        </div>
+        <div>
+          <label htmlFor="city">City:</label>
           <input
             type="text"
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            id="city"
+            name="city"
+            value={hospitalData.city}
+            onChange={handleInputChange}
           />
-        </label>
-        <br />
-        <label>
-          Markdown:
-          <textarea
-            value={markdownInput}
-            onChange={handleMarkdownInputChange}
-          />
-        </label>
-        <br />
-        <button type="submit">Add</button>
+        </div>
+
+        <button type="submit">Add Hospital</button>
+        {successMessage && <div>{successMessage}</div>}
+        {errorMessage && <div>ERROR: {errorMessage}</div>}
       </form>
-      <div>
-        <ReactMarkdown>{markdownInput}</ReactMarkdown>
-      </div>
     </div>
   );
-}
+};
 
-export default AddHospital;
+export default AddHospitalForm;
