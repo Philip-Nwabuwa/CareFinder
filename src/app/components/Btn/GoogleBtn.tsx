@@ -3,8 +3,17 @@ import { auth } from "@/app/lib/firestore";
 import React from "react";
 import { FcGoogle } from "react-icons/fc";
 import { signInWithPopup, GoogleAuthProvider } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { useRouter } from "next/router";
 
 const GoogleBtn = () => {
+  const [user] = useAuthState(auth);
+  const router = useRouter();
+
+  if (user) {
+    router.push("/hospitals");
+  }
+
   const googleAuth = new GoogleAuthProvider();
   const handleSignInWithGoogle = async () => {
     const result = await signInWithPopup(auth, googleAuth);

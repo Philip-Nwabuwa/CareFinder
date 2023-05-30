@@ -7,22 +7,24 @@ import {
   onSnapshot,
   QuerySnapshot,
   DocumentData,
+  setDoc,
+  doc,
 } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
+import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
 
 // Firebase configuration
 const firebaseConfig = {
   apiKey: "AIzaSyBZ43SwjxDhXx5jYuPVei4RmsuPoWs1wSo",
   authDomain: "carefinder-db.firebaseapp.com",
   projectId: "carefinder-db",
-  storageBucket: "carefinder-db.appspot.com",
+  storageBucket: "carefinder-db.appspot.scom",
   messagingSenderId: "1065353021456",
   appId: "1:1065353021456:web:87470c0842f0f4f9d5a295",
 };
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-export const auth = getAuth();
+export const auth = getAuth(app);
 
 // Fetch hospitals from Firestore
 export const fetchHospitalsFromFirestore = async (): Promise<
@@ -71,6 +73,29 @@ export const addHospitalToFirestore = async (
     });
   } catch (error) {
     throw new Error("Failed to add hospital to Firestore.");
+  }
+};
+
+export const signUp = async (
+  email: string,
+  password: string,
+  username: string
+) => {
+  try {
+    // Sign up user with email and password
+    const userCredential = await createUserWithEmailAndPassword(
+      auth,
+      email,
+      password
+    );
+    const user = userCredential.user;
+
+    // Store username in Firestore
+    await setDoc(doc(db, "users", user.uid), {
+      username,
+    });
+  } catch (error) {
+    throw error;
   }
 };
 
