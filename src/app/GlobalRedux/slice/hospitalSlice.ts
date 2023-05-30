@@ -1,8 +1,9 @@
 "use client";
 import { fetchHospitalsFromFirestore } from "@/app/lib/firestore";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { DocumentData } from "firebase/firestore";
 
-export const fetchHospitals = createAsyncThunk(
+export const fetchHospitals = createAsyncThunk<DocumentData[]>(
   "hospitals/fetchHospitals",
   async () => {
     const hospitals = await fetchHospitalsFromFirestore();

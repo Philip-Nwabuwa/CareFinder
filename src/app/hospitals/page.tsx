@@ -4,6 +4,7 @@ import React, { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchHospitals } from "../GlobalRedux/slice/hospitalSlice";
 import { RootState } from "../GlobalRedux/store";
+import ExportCSV from "../components/ExportData/ExportCSV";
 
 const Hospitals = () => {
   const dispatch = useDispatch();
@@ -17,8 +18,6 @@ const Hospitals = () => {
     dispatch(fetchHospitals() as any);
   }, [dispatch]);
 
-  console.log(hospitals);
-
   if (status === "loading") {
     return <div>Loading hospitals...</div>;
   }
@@ -29,6 +28,7 @@ const Hospitals = () => {
 
   return (
     <div>
+      <ExportCSV />
       <ul>
         {hospitals.map((hospital) => (
           <li key={hospital.id}>

@@ -26,24 +26,35 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 export const auth = getAuth(app);
 
+interface HospitalData extends DocumentData {
+  name: string;
+  address: string;
+  phoneNumber: string;
+  email: string;
+  createdAt: Date;
+  city: string;
+  state: string;
+  website: string;
+}
+
 // Fetch hospitals from Firestore
 export const fetchHospitalsFromFirestore = async (): Promise<
-  DocumentData[]
+  HospitalData[]
 > => {
   try {
     const hospitalsCollection = collection(db, "hospital");
     const querySnapshot: QuerySnapshot = await getDocs(hospitalsCollection);
 
-    let hospitalsData: DocumentData[] = [];
+    let hospitalsData: HospitalData[] = [];
     querySnapshot.forEach((doc) => {
-      hospitalsData.push(doc.data());
+      hospitalsData.push(doc.data() as HospitalData);
     });
 
     // Listen for real-time changes in the Firestore collection
     onSnapshot(hospitalsCollection, (snapshot) => {
-      const updatedHospitalsData: DocumentData[] = [];
+      const updatedHospitalsData: HospitalData[] = [];
       snapshot.forEach((doc) => {
-        updatedHospitalsData.push(doc.data());
+        updatedHospitalsData.push(doc.data() as HospitalData);
       });
       hospitalsData = updatedHospitalsData;
     });
