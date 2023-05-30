@@ -4,8 +4,9 @@ import GoogleBtn from "@/app/components/Btn/GoogleBtn";
 import TwitterBtn from "@/app/components/Btn/TwitterBtn";
 import Link from "next/link";
 import React, { useState, ChangeEvent, FormEvent } from "react";
+import Image from "next/image";
 
-const page: React.FC = () => {
+const Page: React.FC = () => {
   const [email, setEmail] = useState<string>("");
   const [password, setPassword] = useState<string>("");
   const [confirmPassword, setConfirmPassword] = useState<string>("");
@@ -38,7 +39,9 @@ const page: React.FC = () => {
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
       <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
+        <Image
+          width={200}
+          height={200}
           className="mx-auto h-10 w-auto"
           src="/logo.png"
           alt="Your Company"
@@ -155,4 +158,4 @@ const page: React.FC = () => {
   );
 };
 
-export default page;
+export default Page;
