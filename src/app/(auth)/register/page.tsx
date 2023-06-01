@@ -5,13 +5,11 @@ const Page = async ({
 }: {
   searchParams: { redirectUrl: string };
 }) => {
-  // const { redirectUrl } = searchParams;
+  const { redirectUrl } = searchParams;
 
   return (
     <section className="py-24">
-      <SignUp
-      // redirectUrl={redirectUrl || "/hospitals"}
-      />
+      <SignUp redirectUrl={redirectUrl || "/hospitals"} />
     </section>
   );
 };

@@ -1,47 +1,20 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { Dialog, Popover } from "@headlessui/react";
 import { AiOutlineMenu } from "react-icons/ai";
 import { AiOutlineClose } from "react-icons/ai";
 import ThemeToggle from "./ThemeToggle";
 import Link from "next/link";
 import Image from "next/image";
-import { User, getAuth, onAuthStateChanged } from "firebase/auth";
-import { auth } from "../lib/firestore";
-import {
-  ClerkProvider,
-  SignedIn,
-  SignedOut,
-  SignInButton,
-  SignUpButton,
-  UserButton,
-} from "@clerk/nextjs";
+import { ClerkProvider, SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
-  const [user, setUser] = useState<User | null>(null);
-
-  const users = auth.currentUser;
-  useEffect(() => {
-    const auth = getAuth();
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-    });
-
-    return () => {
-      unsubscribe(); // Unsubscribe from the auth state change listener
-    };
-  }, []);
-
-  const handleSignOut = async () => {
-    const auth = getAuth();
-    await auth.signOut();
-  };
 
   return (
-    <header>
+    <>
       <nav
-        className="mx-auto flex max-w-7xl items-center justify-between p-2 lg:px-8"
+        className="mx-auto flex max-w-7xl items-center justify-between p-2 lg:px-8 fixed top-0 left-0 right-0 z-50 shadow-sm"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
@@ -64,6 +37,9 @@ function Navbar() {
           </button>
         </div>
         <Popover.Group className="hidden lg:flex lg:gap-x-12 items-center">
+          <Link href="/hospitals" className="text-sm font-semibold leading-6 ">
+            Hospitals
+          </Link>
           <Link href="#" className="text-sm font-semibold leading-6 ">
             Documentaion
           </Link>
@@ -82,12 +58,6 @@ function Navbar() {
               className="text-sm font-semibold leading-6 "
             >
               Edit Hospital
-            </Link>
-            <Link
-              href="/hospitals/export"
-              className="text-sm font-semibold leading-6 "
-            >
-              Export Data
             </Link>
           </SignedIn>
           <ThemeToggle />
@@ -158,24 +128,20 @@ function Navbar() {
                 </a>
               </div>
               <div className="py-6">
-                {user ? (
-                  <button onClick={handleSignOut}>Sign Out</button>
-                ) : (
-                  <button>
-                    <Link
-                      href="/login"
-                      className="text-sm font-semibold leading-6 "
-                    >
-                      Log in
-                    </Link>
-                  </button>
-                )}
+                <button>
+                  <Link
+                    href="/login"
+                    className="text-sm font-semibold leading-6 "
+                  >
+                    Log in
+                  </Link>
+                </button>
               </div>
             </div>
           </div>
         </Dialog.Panel>
       </Dialog>
-    </header>
+    </>
   );
 }
 

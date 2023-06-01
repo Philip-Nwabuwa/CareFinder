@@ -48,7 +48,7 @@ const AddHospitalForm = () => {
   };
 
   return (
-    <div>
+    <div className="mt-24">
       <h2>Add a Hospital</h2>
 
       <form onSubmit={handleSubmit} className="text-center">

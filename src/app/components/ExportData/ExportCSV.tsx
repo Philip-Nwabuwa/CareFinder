@@ -23,7 +23,7 @@ const ExportCSV = () => {
     <div>
       <button>
         <CSVLink data={hospitals} headers={headers} filename={"CareFinder.csv"}>
-          Download me
+          Export Data
         </CSVLink>
       </button>
     </div>
