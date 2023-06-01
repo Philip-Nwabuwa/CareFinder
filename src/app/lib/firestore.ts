@@ -10,7 +10,7 @@ import {
   setDoc,
   doc,
 } from "firebase/firestore";
-import { getAuth, createUserWithEmailAndPassword } from "firebase/auth";
+import { getAuth } from "firebase/auth";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -84,29 +84,6 @@ export const addHospitalToFirestore = async (
     });
   } catch (error) {
     throw new Error("Failed to add hospital to Firestore.");
-  }
-};
-
-export const signUp = async (
-  email: string,
-  password: string,
-  username: string
-) => {
-  try {
-    // Sign up user with email and password
-    const userCredential = await createUserWithEmailAndPassword(
-      auth,
-      email,
-      password
-    );
-    const user = userCredential.user;
-
-    // Store username in Firestore
-    await setDoc(doc(db, "users", user.uid), {
-      username,
-    });
-  } catch (error) {
-    throw error;
   }
 };
 

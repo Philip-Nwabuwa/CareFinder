@@ -8,6 +8,14 @@ import Link from "next/link";
 import Image from "next/image";
 import { User, getAuth, onAuthStateChanged } from "firebase/auth";
 import { auth } from "../lib/firestore";
+import {
+  ClerkProvider,
+  SignedIn,
+  SignedOut,
+  SignInButton,
+  SignUpButton,
+  UserButton,
+} from "@clerk/nextjs";
 
 function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -62,42 +70,47 @@ function Navbar() {
           <Link href="/about" className="text-sm font-semibold leading-6 ">
             About
           </Link>
-          {user ? (
-            <>
-              <Link
-                href="/hospitals/add"
-                className="text-sm font-semibold leading-6 "
-              >
-                Add Hospital
-              </Link>
-              <Link
-                href="/hospitals/edit"
-                className="text-sm font-semibold leading-6 "
-              >
-                Edit Hospital
-              </Link>
-              <Link
-                href="/hospitals/export"
-                className="text-sm font-semibold leading-6 "
-              >
-                Export Data
-              </Link>
-            </>
-          ) : (
-            <button></button>
-          )}
+          <SignedIn>
+            <Link
+              href="/hospitals/add"
+              className="text-sm font-semibold leading-6 "
+            >
+              Add Hospital
+            </Link>
+            <Link
+              href="/hospitals/edit"
+              className="text-sm font-semibold leading-6 "
+            >
+              Edit Hospital
+            </Link>
+            <Link
+              href="/hospitals/export"
+              className="text-sm font-semibold leading-6 "
+            >
+              Export Data
+            </Link>
+          </SignedIn>
           <ThemeToggle />
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">
-          {user ? (
-            <button onClick={handleSignOut}>Sign Out</button>
-          ) : (
+          <SignedIn>
+            <UserButton />
+          </SignedIn>
+          <SignedOut>
+            <button>
+              <Link
+                href="/register"
+                className="text-sm font-semibold leading-6 mr-2"
+              >
+                Sign up
+              </Link>
+            </button>
             <button>
               <Link href="/login" className="text-sm font-semibold leading-6 ">
                 Log in
               </Link>
             </button>
-          )}
+          </SignedOut>
         </div>
       </nav>
       <Dialog

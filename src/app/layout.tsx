@@ -3,6 +3,7 @@ import { Providers } from "./GlobalRedux/provider";
 import { Inter } from "next/font/google";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
+import { ClerkProvider } from "@clerk/nextjs";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -17,14 +18,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <Providers>
-      <html lang="en">
-        <body className={inter.className}>
-          <Navbar />
-          {children}
-          <Footer />
-        </body>
-      </html>
-    </Providers>
+    <ClerkProvider>
+      <Providers>
+        <html lang="en">
+          <body className={inter.className}>
+            <Navbar />
+            {children}
+            <Footer />
+          </body>
+        </html>
+      </Providers>
+    </ClerkProvider>
   );
 }
