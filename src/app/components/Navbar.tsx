@@ -46,20 +46,20 @@ function Navbar() {
           <Link href="/about" className="text-sm font-semibold leading-6 ">
             About
           </Link>
-          <SignedIn>
-            <Link
-              href="/hospitals/add"
-              className="text-sm font-semibold leading-6 "
-            >
-              Add Hospital
-            </Link>
-            <Link
-              href="/hospitals/edit"
-              className="text-sm font-semibold leading-6 "
-            >
-              Edit Hospital
-            </Link>
-          </SignedIn>
+
+          <Link
+            href="/hospitals/add"
+            className="text-sm font-semibold leading-6 "
+          >
+            Add Hospital
+          </Link>
+          <Link
+            href="/hospitals/edit"
+            className="text-sm font-semibold leading-6 "
+          >
+            Edit Hospital
+          </Link>
+
           <ThemeToggle />
         </Popover.Group>
         <div className="hidden lg:flex lg:flex-1 lg:justify-end">

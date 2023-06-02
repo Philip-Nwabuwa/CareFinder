@@ -62,16 +62,22 @@ const AddHospitalForm = () => {
             onChange={handleInputChange}
           />
         </div>
-        <div>
-          <label htmlFor="address">Address:</label>
+
+        <div className="form-control w-full max-w-xs">
+          <label className="label" htmlFor="address">
+            <span className="label-text">What is your name?</span>
+          </label>
           <input
             type="text"
             id="address"
-            name="address"
-            value={hospitalData.address}
             onChange={handleInputChange}
-          ></input>
+            value={hospitalData.address}
+            name="address"
+            placeholder="Type here"
+            className="input input-bordered w-full max-w-xs"
+          />
         </div>
+
         <div>
           <label htmlFor="phoneNumber">Phone Number:</label>
           <input
