@@ -8,7 +8,7 @@ const Page = async ({
   const { redirectUrl } = searchParams;
 
   return (
-    <section className="py-24">
+    <section className="py-24 flex items-center justify-center">
       <SignIn redirectUrl={redirectUrl || "/hospitals"} />
     </section>
   );
