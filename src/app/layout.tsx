@@ -4,6 +4,7 @@ import { Inter } from "next/font/google";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
+import { dark } from "@clerk/themes";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,10 +19,15 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <ClerkProvider>
+    <ClerkProvider
+      appearance={{
+        baseTheme: dark,
+      }}
+    >
       <Providers>
-        <html lang="en">
-          <body className={inter.className}>
+        <html lang="en" className={inter.className}>
+          <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+          <body>
             <Navbar />
             {children}
             <Footer />

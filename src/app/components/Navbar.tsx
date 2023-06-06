@@ -14,7 +14,7 @@ function Navbar() {
   return (
     <>
       <nav
-        className="bg-[#191d24] text-white mx-auto flex max-w-7xl items-center justify-between p-2 lg:px-8 fixed top-0 left-0 right-0 z-50 shadow-sm"
+        className="bg-[#191d24] text-white flex w-full items-center justify-between p-2 lg:px-8 fixed top-0 left-0 right-0 z-50 shadow-sm"
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
@@ -69,14 +69,17 @@ function Navbar() {
           <SignedOut>
             <button>
               <Link
-                href="/register"
+                href="/sign-in"
                 className="text-sm font-semibold leading-6 mr-2"
               >
                 Sign up
               </Link>
             </button>
             <button>
-              <Link href="/login" className="text-sm font-semibold leading-6 ">
+              <Link
+                href="/sign-up"
+                className="text-sm font-semibold leading-6 "
+              >
                 Log in
               </Link>
             </button>

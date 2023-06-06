@@ -2,8 +2,9 @@ type Hospital = {
   id: string;
   name: string;
   address: string;
-  phone: number;
+  phone: string;
   city: string;
   state: string;
   website: string;
+  description: string;
 };

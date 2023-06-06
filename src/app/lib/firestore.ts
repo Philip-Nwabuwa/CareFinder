@@ -7,8 +7,10 @@ import {
   onSnapshot,
   QuerySnapshot,
   DocumentData,
+  updateDoc,
   setDoc,
   doc,
+  deleteDoc,
 } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
 
@@ -27,14 +29,15 @@ const db = getFirestore(app);
 export const auth = getAuth(app);
 
 interface HospitalData extends DocumentData {
+  id: string;
   name: string;
   address: string;
   phoneNumber: string;
-  email: string;
   createdAt: Date;
   city: string;
   state: string;
   website: string;
+  description: string;
 }
 
 // Fetch hospitals from Firestore
@@ -47,14 +50,17 @@ export const fetchHospitalsFromFirestore = async (): Promise<
 
     let hospitalsData: HospitalData[] = [];
     querySnapshot.forEach((doc) => {
-      hospitalsData.push(doc.data() as HospitalData);
+      hospitalsData.push({ id: doc.id, ...doc.data() } as HospitalData);
     });
 
     // Listen for real-time changes in the Firestore collection
     onSnapshot(hospitalsCollection, (snapshot) => {
       const updatedHospitalsData: HospitalData[] = [];
       snapshot.forEach((doc) => {
-        updatedHospitalsData.push(doc.data() as HospitalData);
+        updatedHospitalsData.push({
+          id: doc.id,
+          ...doc.data(),
+        } as HospitalData);
       });
       hospitalsData = updatedHospitalsData;
     });
@@ -76,14 +82,33 @@ export const addHospitalToFirestore = async (
       name: hospitalData.hospitalName,
       address: hospitalData.address,
       phoneNumber: hospitalData.phoneNumber,
-      email: hospitalData.email,
       createdAt: new Date(),
       city: hospitalData.city,
       state: hospitalData.state,
       website: hospitalData.website,
+      description: hospitalData.description,
     });
   } catch (error) {
     throw new Error("Failed to add hospital to Firestore.");
+  }
+};
+
+// Update a hospital in Firestore
+export const updateHospitalInFirestore = async (
+  id: string,
+  updates: Partial<Hospital>
+) => {
+  const hospitalRef = doc(db, "hospitals", id);
+  await updateDoc(hospitalRef, updates);
+};
+
+// Delete a hospital from Firestore
+export const deleteHospitalFromFirestore = async (hospitalId: string) => {
+  try {
+    const hospitalRef = doc(db, "hospital", hospitalId);
+    await deleteDoc(hospitalRef);
+  } catch (error) {
+    throw new Error("Failed to delete hospital from Firestore.");
   }
 };
 
