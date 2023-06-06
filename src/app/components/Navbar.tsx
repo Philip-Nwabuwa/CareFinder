@@ -53,12 +53,6 @@ function Navbar() {
           >
             Add Hospital
           </Link>
-          <Link
-            href="/hospitals/edit"
-            className="text-sm font-semibold leading-6 "
-          >
-            Edit Hospital
-          </Link>
 
           <ThemeToggle />
         </Popover.Group>
@@ -113,22 +107,31 @@ function Navbar() {
               <div className="space-y-2 py-6">
                 <Link
                   href="/hospitals"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7  hover:bg-gray-50"
+                  className="-mx-3 text-white block rounded-lg px-3 py-2 text-base font-semibold leading-7  hover:bg-gray-50 hover:text-gray-900"
                 >
                   Hospitals
                 </Link>
                 <Link
                   href="/"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7  hover:bg-gray-50"
+                  className="-mx-3 text-white block rounded-lg px-3 py-2 text-base font-semibold leading-7  hover:bg-gray-50 hover:text-gray-900"
                 >
                   Documentation
                 </Link>
                 <Link
                   href="/about"
-                  className="-mx-3 block rounded-lg px-3 py-2 text-base font-semibold leading-7  hover:bg-gray-50"
+                  className="-mx-3 text-white block rounded-lg px-3 py-2 text-base font-semibold leading-7  hover:bg-gray-50 hover:text-gray-900"
                 >
                   About
                 </Link>
+                <Link
+                  href="/hospitals/add"
+                  className="-mx-3 text-white block rounded-lg px-3 py-2 text-base font-semibold leading-7  hover:bg-gray-50 hover:text-gray-900"
+                >
+                  Add Hospital
+                </Link>
+              </div>
+              <div className="py-6">
+                <ThemeToggle />
               </div>
               <div className="py-6">
                 <SignedOut>
@@ -141,6 +144,9 @@ function Navbar() {
                     </Link>
                   </button>
                 </SignedOut>
+                <SignedIn>
+                  <UserButton />
+                </SignedIn>
               </div>
             </div>
           </div>

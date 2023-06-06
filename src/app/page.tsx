@@ -1,35 +1,39 @@
 import Image from "next/image";
 import Link from "next/link";
+import { BsHospital } from "react-icons/bs";
+import { BiLocationPlus } from "react-icons/bi";
+import { AiOutlineSchedule } from "react-icons/ai";
+import { MdLocalHospital } from "react-icons/md";
 
 const Page = () => {
   const features = [
     {
-      name: "Push to deploy",
+      name: "Location-Based Search",
       description:
-        "Morbi viverra dui mi arcu sed. Tellus semper adipiscing suspendisse semper morbi. Odio urna massa nunc massa.",
-      // icon: CloudArrowUpIcon,
+        "Easily search for and find healthcare centers near you based on your current location or a specified address.",
+      icon: BiLocationPlus,
     },
     {
-      name: "SSL certificates",
+      name: "Detailed Center Profiles",
       description:
-        "Sit quis amet rutrum tellus ullamcorper ultricies libero dolor eget. Sem sodales gravida quam turpis enim lacus amet.",
-      // icon: LockClosedIcon,
+        "View detailed profiles of healthcare centers, including their services, hours of operation, contact information, and patient reviews.",
+      icon: BsHospital,
     },
     {
-      name: "Simple queues",
+      name: "Convenient Scheduling",
       description:
-        "Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque.",
-      // icon: ArrowPathIcon,
+        "Quickly and easily schedule appointments with healthcare centers directly through the app.",
+      icon: AiOutlineSchedule,
     },
     {
-      name: "Advanced security",
+      name: "Insurance Compatibility",
       description:
-        "Arcu egestas dolor vel iaculis in ipsum mauris. Tincidunt mattis aliquet hac quis. Id hac maecenas ac donec pharetra eget.",
-      // icon: FingerPrintIcon,
+        "Filter your search results to only show healthcare centers that accept your insurance plan.",
+      icon: MdLocalHospital,
     },
   ];
   return (
-    <div className="relative isolate px-6 mt-36">
+    <div className="relative isolate px-6 mt-48">
       <div
         className="absolute inset-x-0 -top-40 -z-10 transform-gpu overflow-hidden blur-3xl sm:-top-80"
         aria-hidden="true"
@@ -45,13 +49,15 @@ const Page = () => {
       <div className="mx-auto max-w-2xl py-12 sm:py-14 lg:py-16">
         <div className="text-center">
           <h1 className="text-4xl font-bold tracking-tight  sm:text-6xl">
-            Data to enrich your online business
+            Find the care you need, when you need it.{" "}
           </h1>
           <p className="mt-6 text-lg leading-8 text-gray-600">
-            Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui
-            lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat
-            fugiat aliqua.
+            With CareFinder, you can easily search for and connect with
+            top-rated healthcare providers in your area. Whether youre looking
+            for a primary care physician, specialist, or urgent care facility,
+            we have got you covered.
           </p>
+
           <div className="mt-10 flex items-center justify-center gap-x-6">
             <a
               href="/hospitals"
@@ -84,15 +90,14 @@ const Page = () => {
         <div className="mx-auto max-w-7xl px-6 lg:px-8">
           <div className="mx-auto max-w-2xl lg:text-center">
             <h2 className="text-base font-semibold leading-7 text-indigo-600">
-              Deploy faster
+              CareFinder Features
             </h2>
             <p className="mt-2 text-3xl font-bold tracking-tight  sm:text-4xl">
-              Everything you need to deploy your app
+              Start your search today and take control of your health.
             </p>
             <p className="mt-6 text-lg leading-8 text-gray-600">
-              Quis tellus eget adipiscing convallis sit sit eget aliquet quis.
-              Suspendisse eget egestas a elementum pulvinar et feugiat blandit
-              at. In mi viverra elit nunc.
+              CareFinder is a free, easy-to-use tool that allows you to search
+              for and connect with top-rated healthcare providers in your area.
             </p>
           </div>
           <div className="mx-auto mt-16 max-w-2xl sm:mt-20 lg:mt-24 lg:max-w-4xl">
@@ -101,7 +106,10 @@ const Page = () => {
                 <div key={feature.name} className="relative pl-16">
                   <dt className="text-base font-semibold leading-7 text-gray-900">
                     <div className="absolute left-0 top-0 flex h-10 w-10 items-center justify-center rounded-lg bg-indigo-600">
-                      {/* <feature.icon className="h-6 w-6 text-white" aria-hidden="true" /> */}
+                      <feature.icon
+                        className="h-6 w-6 text-white"
+                        aria-hidden="true"
+                      />
                     </div>
                     {feature.name}
                   </dt>

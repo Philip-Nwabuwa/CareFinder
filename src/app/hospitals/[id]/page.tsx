@@ -10,7 +10,7 @@ import {
 import EditHospital from "../edit/page";
 import Link from "next/link";
 
-const page = ({
+const Page = ({
   params,
 }: {
   params: {
@@ -81,4 +81,4 @@ const page = ({
   );
 };
 
-export default page;
+export default Page;
