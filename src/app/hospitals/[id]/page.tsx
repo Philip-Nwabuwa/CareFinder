@@ -7,8 +7,8 @@ import {
   deleteHospital,
   fetchHospitals,
 } from "@/app/GlobalRedux/slice/hospitalSlice";
-import EditHospital from "../edit/page";
 import Link from "next/link";
+import EditHospital from "../edit/page";
 
 const Page = ({
   params,
@@ -49,9 +49,9 @@ const Page = ({
         <p>{hospital.phone}</p>
         <p>{hospital.website}</p>
         <p>{hospital.description}</p>
-        <EditHospital />
+        <EditHospital hospital={hospital} />
         <>
-          <label htmlFor="my_modal_6" className="btn">
+          <label htmlFor="my_modal_6" className="btn btn-error">
             Delete
           </label>
         </>
@@ -59,8 +59,8 @@ const Page = ({
       <input type="checkbox" id="my_modal_6" className="modal-toggle" />
       <div className="modal">
         <div className="modal-box">
-          <h3 className="font-bold text-lg">Hello!</h3>
-          <p className="py-4">This modal works with a hidden checkbox!</p>
+          <h3 className="font-bold text-lg">Dear User</h3>
+          <p className="py-4">Are you sure about deleting this data</p>
           <div className="modal-action">
             <label htmlFor="my_modal_6" className="btn">
               Return
@@ -69,7 +69,7 @@ const Page = ({
               <label
                 onClick={handleDelete}
                 htmlFor="my_modal_6"
-                className="btn"
+                className="btn btn-error"
               >
                 Delete
               </label>

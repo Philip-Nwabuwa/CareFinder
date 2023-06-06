@@ -137,7 +137,7 @@ function Navbar() {
                 <SignedOut>
                   <button>
                     <Link
-                      href="/login"
+                      href="/sign-in"
                       className="text-sm font-semibold leading-6 "
                     >
                       Log in

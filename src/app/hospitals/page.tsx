@@ -6,6 +6,7 @@ import { fetchHospitals } from "../GlobalRedux/slice/hospitalSlice";
 import { RootState } from "../GlobalRedux/store";
 import ExportCSV from "../components/ExportData/ExportCSV";
 import Link from "next/link";
+import LoadingAnimation from "../components/loadingAnimation";
 
 const Hospitals = () => {
   const dispatch = useDispatch();
@@ -25,11 +26,19 @@ const Hospitals = () => {
   }, [dispatch]);
 
   if (status === "failed") {
-    return <div>Error: {error}</div>;
+    return (
+      <div className="h-screen flex justify-center items-center">
+        Error: {error}
+      </div>
+    );
   }
 
   if (status === "loading") {
-    return <div>Loading...</div>;
+    return (
+      <div className="h-screen flex justify-center items-center">
+        <LoadingAnimation />
+      </div>
+    );
   }
 
   // Calculate the index of the first and last item on the current page
@@ -55,7 +64,7 @@ const Hospitals = () => {
   };
 
   return (
-    <div className="mt-32 text-center mx-6">
+    <div className="mt-32 text-center md:mx-6 mx-3">
       <h1 className="uppercase text-xl font-extrabold mb-5">
         List of Hospitals
       </h1>
@@ -72,36 +81,38 @@ const Hospitals = () => {
         {currentItems.map((hospital) => (
           <li
             key={hospital.id}
-            className="p-3 flex items-center border border-solid border-black rounded-md my-2"
+            className="p-3  border border-solid border-black rounded-md my-2"
           >
-            <div className="flex flex-col">
-              <h2>{hospital.name}</h2>
-              <p>
-                {hospital.address}, {hospital.city}, {hospital.state}
-              </p>
+            <div className="flex items-center justify-between">
+              <h2 className="font-bold">{hospital.name}</h2>
+
+              <Link className="ml-1" href={`/hospitals/${hospital.id}`}>
+                <button className="btn">Details</button>
+              </Link>
             </div>
-            <Link className="ml-auto" href={`/hospitals/${hospital.id}`}>
-              View Details
-            </Link>
+            <p className="md:w-[60%] w-[70%] md:text-base text-xs">
+              {hospital.address}, {hospital.city}, {hospital.state}
+            </p>
           </li>
         ))}
       </ul>
 
-      <div className="flex justify-between items-center my-4">
-        <div className="flex">
+      <div className="flex md:flex-row flex-col justify-between items-center my-4">
+        <ExportCSV />
+        <div className="flex md:mt-0 mt-3">
           <button
             className="mx-2"
             disabled={currentPage === 1}
             onClick={() => handlePageChange(currentPage - 1)}
           >
-            Previous Page
+            Previous
           </button>
           <button
-            className="mx-2"
+            className="mx-2 "
             disabled={currentItems.length < itemsPerPage}
             onClick={() => handlePageChange(currentPage + 1)}
           >
-            Next Page
+            Next
           </button>
 
           <p className="mx-2">
@@ -109,14 +120,14 @@ const Hospitals = () => {
             {Math.ceil(hospitals.length / itemsPerPage)}
           </p>
 
-          <p className="mx-2">Total Hospitals: {hospitals.length}</p>
+          <p className="mx-2 hidden md:flex ">
+            Total Hospitals: {hospitals.length}
+          </p>
 
-          <p className="mx-2">
+          <p className="mx-2 hidden md:flex">
             Total Pages: {Math.ceil(hospitals.length / itemsPerPage)}
           </p>
         </div>
-
-        <ExportCSV />
       </div>
     </div>
   );

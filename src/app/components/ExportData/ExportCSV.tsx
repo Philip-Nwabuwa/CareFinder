@@ -21,7 +21,7 @@ const ExportCSV = () => {
 
   return (
     <div>
-      <button className="btn w-full max-w-xs">
+      <button className="btn w-full max-w-sm">
         <CSVLink data={hospitals} headers={headers} filename={"CareFinder.csv"}>
           Export Data
         </CSVLink>

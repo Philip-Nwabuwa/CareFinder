@@ -2,6 +2,8 @@
 
 import { useState } from "react";
 import { addHospitalToFirestore } from "../lib/firestore";
+import Link from "next/link";
+import { AiOutlineWarning } from "react-icons/ai";
 
 const AddHospitalForm = () => {
   const [hospitalData, setHospitalData] = useState({
@@ -11,7 +13,6 @@ const AddHospitalForm = () => {
     website: "",
     state: "",
     city: "",
-    email: "",
     description: "",
   });
 
@@ -25,8 +26,35 @@ const AddHospitalForm = () => {
     setHospitalData((prevData) => ({ ...prevData, [name]: value }));
   };
 
+  const validateForm = () => {
+    if (!hospitalData.hospitalName) {
+      setErrorMessage("Hospital name is required.");
+      return false;
+    }
+    if (!hospitalData.address) {
+      setErrorMessage("Address is required.");
+      return false;
+    }
+    if (!hospitalData.city) {
+      setErrorMessage("City is required.");
+      return false;
+    }
+    if (!hospitalData.state) {
+      setErrorMessage("State is required.");
+      return false;
+    }
+    if (!hospitalData.phoneNumber) {
+      setErrorMessage("Phone number is required.");
+      return false;
+    }
+    return true;
+  };
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    if (!validateForm()) {
+      return;
+    }
     try {
       await addHospitalToFirestore(hospitalData);
       setHospitalData({
@@ -34,7 +62,6 @@ const AddHospitalForm = () => {
         address: "",
         phoneNumber: "",
         website: "",
-        email: "",
         state: "",
         city: "",
         description: "",
@@ -62,7 +89,9 @@ const AddHospitalForm = () => {
       >
         <div className="form-control mx-3 my-4 w-full max-w-3xl">
           <label className="label" htmlFor="HospitalName">
-            <span className="label-text">Hospital Name</span>
+            <span className="label-text">
+              Hospital Name<span className="text-red-500">*</span>
+            </span>
           </label>{" "}
           <input
             type="text"
@@ -77,7 +106,9 @@ const AddHospitalForm = () => {
 
         <div className="form-control  my-4 w-full max-w-3xl">
           <label className="label" htmlFor="address">
-            <span className="label-text">Hospital Address</span>
+            <span className="label-text">
+              Hospital Address<span className="text-red-500">*</span>
+            </span>
           </label>
           <input
             type="text"
@@ -91,9 +122,11 @@ const AddHospitalForm = () => {
         </div>
 
         <div className="w-full max-w-3xl flex md:flex-row flex-col gap-5">
-          <div className="form-control my-4 w-full">
+          <div className="form-control w-full">
             <label className="label" htmlFor="city">
-              <span className="label-text">City</span>
+              <span className="label-text">
+                City<span className="text-red-500">*</span>
+              </span>
             </label>{" "}
             <input
               type="text"
@@ -105,9 +138,11 @@ const AddHospitalForm = () => {
               className="input input-bordered w-full "
             />
           </div>
-          <div className="form-control  my-4 w-full">
+          <div className="form-control w-full">
             <label className="label" htmlFor="state">
-              <span className="label-text">State</span>
+              <span className="label-text">
+                State<span className="text-red-500">*</span>
+              </span>
             </label>{" "}
             <input
               type="text"
@@ -121,10 +156,12 @@ const AddHospitalForm = () => {
           </div>
         </div>
 
-        <div className="w-full max-w-3xl flex  md:flex-row flex-col gap-5">
-          <div className="form-control  my-4 w-full">
+        <div className="w-full max-w-3xl flex mt-4  md:flex-row flex-col gap-5">
+          <div className="form-control w-full">
             <label className="label" htmlFor="phoneNumber">
-              <span className="label-text">Phone Number</span>
+              <span className="label-text">
+                Phone Number<span className="text-red-500">*</span>
+              </span>
             </label>{" "}
             <input
               type="number"
@@ -136,9 +173,11 @@ const AddHospitalForm = () => {
               className="input input-bordered w-full placeholder-opacity-70"
             />
           </div>
-          <div className="form-control  my-4 w-full">
+          <div className="form-control w-full">
             <label className="label" htmlFor="website">
-              <span className="label-text">website</span>
+              <span className="label-text">
+                website<span className="text-red-500">*</span>
+              </span>
             </label>{" "}
             <div className="flex items-center input input-bordered w-full">
               <span className="text-gray-500 text-sm">https://</span>
@@ -155,7 +194,9 @@ const AddHospitalForm = () => {
         </div>
         <div className="form-control my-4 w-full max-w-3xl">
           <label className="label" htmlFor="description">
-            <span className="label-text">description</span>
+            <span className="label-text">
+              description <span className="text-red-500">*</span>
+            </span>
           </label>
           <textarea
             id="description"
@@ -168,39 +209,34 @@ const AddHospitalForm = () => {
         </div>
 
         <button type="submit" className="btn w-full max-w-3xl mt-4 md:mb-4">
-          <a href="#my_modal_8">Submit</a>
+          <label htmlFor="my_modal_6">Submit</label>
         </button>
-        {successMessage && (
-          <div>
-            <div className="modal" id="my_modal_8">
-              <div className="modal-box">
-                <h3 className="font-bold text-lg text-green-500">Success</h3>
-                <p className="py-4">successfully added your data</p>
-                <div className="modal-action">
-                  <a href="/hospitals" className="btn">
-                    view hospitals
-                  </a>
-                </div>
-              </div>
+
+        <input type="checkbox" id="my_modal_6" className="modal-toggle" />
+        <div className="modal">
+          <div className="modal-box">
+            {successMessage && (
+              <p className="py-4">successfully added Hospital</p>
+            )}
+            {errorMessage && (
+              <p className="py-4 flex items-center">
+                <AiOutlineWarning className="mr-2 text-red-600 text-2xl" />
+                {errorMessage}
+              </p>
+            )}
+
+            <div className="modal-action">
+              <label htmlFor="my_modal_6" className="btn">
+                {successMessage && (
+                  <Link href="/hospitals">
+                    <p className="py-4">Return</p>
+                  </Link>
+                )}
+                {errorMessage && <p className="py-4">Retry</p>}
+              </label>
             </div>
           </div>
-        )}
-        {errorMessage && (
-          <div>
-            <div>
-              <div className="modal" id="my_modal_8">
-                <div className="modal-box">
-                  <p className="py-4">{errorMessage}</p>
-                  <div className="modal-action">
-                    <a href="#" className="btn">
-                      Try again
-                    </a>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
+        </div>
       </form>
     </section>
   );

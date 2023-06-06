@@ -1,4 +1,7 @@
-import { fetchHospitalsFromFirestore } from "@/app/lib/firestore";
+import {
+  fetchHospitalsFromFirestore,
+  updateHospitalInFirestore,
+} from "@/app/lib/firestore";
 import { deleteHospitalFromFirestore } from "@/app/lib/firestore";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
@@ -18,6 +21,19 @@ export const deleteHospital = createAsyncThunk(
   "hospitals/deleteHospital",
   async (hospitalId: string) => {
     await deleteHospitalFromFirestore(hospitalId);
+  }
+);
+
+export const updateHospital = createAsyncThunk(
+  "hospitals/updateHospital",
+  async ({
+    hospitalId,
+    updates,
+  }: {
+    hospitalId: string;
+    updates: Partial<Hospital>;
+  }) => {
+    await updateHospitalInFirestore(hospitalId, updates);
   }
 );
 
@@ -59,6 +75,17 @@ const hospitalsSlice = createSlice({
         state.hospitals = state.hospitals.filter(
           (hospital) => hospital.id !== action.meta.arg
         );
+      })
+      .addCase(updateHospital.fulfilled, (state, action) => {
+        const index = state.hospitals.findIndex(
+          (hospital) => hospital.id === action.meta.arg.hospitalId
+        );
+        if (index !== -1) {
+          state.hospitals[index] = {
+            ...state.hospitals[index],
+            ...action.meta.arg.updates,
+          };
+        }
       });
   },
 });
