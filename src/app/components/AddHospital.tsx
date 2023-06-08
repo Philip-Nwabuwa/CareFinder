@@ -207,10 +207,12 @@ const AddHospitalForm = () => {
             placeholder="details about the hospital"
           ></textarea>
         </div>
-
-        <button type="submit" className="btn w-full max-w-3xl mt-4 md:mb-4">
-          <label htmlFor="my_modal_6">Submit</label>
-        </button>
+        <label
+          htmlFor="my_modal_6"
+          className="btn w-full max-w-3xl mt-4 md:mb-4"
+        >
+          <button type="submit">Submit</button>
+        </label>
 
         <input type="checkbox" id="my_modal_6" className="modal-toggle" />
         <div className="modal">

@@ -1,5 +1,5 @@
-import Image from "next/image";
-import Link from "next/link";
+"use client";
+
 import { BsHospital } from "react-icons/bs";
 import { BiLocationPlus } from "react-icons/bi";
 import { AiOutlineSchedule } from "react-icons/ai";

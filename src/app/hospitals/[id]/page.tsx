@@ -8,7 +8,7 @@ import {
   fetchHospitals,
 } from "@/app/GlobalRedux/slice/hospitalSlice";
 import Link from "next/link";
-import EditHospital from "../edit/page";
+// import EditHospital from "../edit/page";
 
 const Page = ({
   params,
@@ -49,7 +49,6 @@ const Page = ({
         <p>{hospital.phone}</p>
         <p>{hospital.website}</p>
         <p>{hospital.description}</p>
-        <EditHospital hospital={hospital} />
         <>
           <label htmlFor="my_modal_6" className="btn btn-error">
             Delete

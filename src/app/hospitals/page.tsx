@@ -3,13 +3,14 @@
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchHospitals } from "../GlobalRedux/slice/hospitalSlice";
-import { RootState } from "../GlobalRedux/store";
+import { AppDispatch, RootState } from "../GlobalRedux/store";
 import ExportCSV from "../components/ExportData/ExportCSV";
 import Link from "next/link";
 import LoadingAnimation from "../components/loadingAnimation";
+import FindHospitalsNearMe from "../components/GetLocation";
 
 const Hospitals = () => {
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
   const hospitals: Hospital[] = useSelector(
     (state: RootState) => state.hospitals.hospitals
   );
@@ -20,6 +21,10 @@ const Hospitals = () => {
   const [itemsPerPage] = useState(10);
   // Add state for search term
   const [searchTerm, setSearchTerm] = useState("");
+
+  const handleCityFetched = (city: string) => {
+    setSearchTerm(city);
+  };
 
   useEffect(() => {
     dispatch(fetchHospitals() as any);
@@ -36,7 +41,9 @@ const Hospitals = () => {
   if (status === "loading") {
     return (
       <div className="h-screen flex justify-center items-center">
-        <LoadingAnimation />
+        <div className="w-16 h-16">
+          <LoadingAnimation />
+        </div>
       </div>
     );
   }
@@ -69,6 +76,8 @@ const Hospitals = () => {
         List of Hospitals
       </h1>
       <div className="flex items-center justify-between">
+        <FindHospitalsNearMe onCityFetched={handleCityFetched} />
+
         <input
           type="text"
           className="input input-bordered w-full"

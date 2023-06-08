@@ -1,8 +1,8 @@
 import {
   fetchHospitalsFromFirestore,
   updateHospitalInFirestore,
+  deleteHospitalFromFirestore,
 } from "@/app/lib/firestore";
-import { deleteHospitalFromFirestore } from "@/app/lib/firestore";
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 
 interface HospitalState {

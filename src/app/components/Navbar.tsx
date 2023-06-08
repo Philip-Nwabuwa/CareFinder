@@ -106,24 +106,28 @@ function Navbar() {
             <div className="-my-6 divide-y divide-gray-500/10">
               <div className="space-y-2 py-6">
                 <Link
+                  onClick={() => setMobileMenuOpen(false)}
                   href="/hospitals"
                   className="-mx-3 text-white block rounded-lg px-3 py-2 text-base font-semibold leading-7  hover:bg-gray-50 hover:text-gray-900"
                 >
                   Hospitals
                 </Link>
                 <Link
+                  onClick={() => setMobileMenuOpen(false)}
                   href="/"
                   className="-mx-3 text-white block rounded-lg px-3 py-2 text-base font-semibold leading-7  hover:bg-gray-50 hover:text-gray-900"
                 >
                   Documentation
                 </Link>
                 <Link
+                  onClick={() => setMobileMenuOpen(false)}
                   href="/about"
                   className="-mx-3 text-white block rounded-lg px-3 py-2 text-base font-semibold leading-7  hover:bg-gray-50 hover:text-gray-900"
                 >
                   About
                 </Link>
                 <Link
+                  onClick={() => setMobileMenuOpen(false)}
                   href="/hospitals/add"
                   className="-mx-3 text-white block rounded-lg px-3 py-2 text-base font-semibold leading-7  hover:bg-gray-50 hover:text-gray-900"
                 >
