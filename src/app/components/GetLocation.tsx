@@ -29,7 +29,9 @@ const FindHospitalsNearMe = ({
   };
 
   return (
-    <button onClick={handleFindHospitalsNearMe}>Find Hospitals Near Me</button>
+    <button className="btn mx-2" onClick={handleFindHospitalsNearMe}>
+      Nearby Hospitals
+    </button>
   );
 };
 

@@ -8,6 +8,7 @@ export default authMiddleware({
     "/documents",
     "/sign-up",
     "/sign-in",
+    `/hospitals/:id*`,
   ],
 });
 

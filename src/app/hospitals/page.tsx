@@ -22,6 +22,8 @@ const Hospitals = () => {
   // Add state for search term
   const [searchTerm, setSearchTerm] = useState("");
 
+  const [showCommandPalette, setShowCommandPalette] = useState(false);
+
   const handleCityFetched = (city: string) => {
     setSearchTerm(city);
   };
@@ -75,15 +77,31 @@ const Hospitals = () => {
       <h1 className="uppercase text-xl font-extrabold mb-5">
         List of Hospitals
       </h1>
-      <div className="flex items-center justify-between">
-        <FindHospitalsNearMe onCityFetched={handleCityFetched} />
-
+      <div className="flex flex-col md:flex-row items-center justify-between">
         <input
           type="text"
           className="input input-bordered w-full"
           placeholder="Search by city, state or name"
-          onChange={(e) => setSearchTerm(e.target.value)}
+          onChange={(e) => {
+            setSearchTerm(e.target.value);
+            // setShowCommandPalette(e.target.value.length > 0);
+          }}
+          // onBlur={() => setShowCommandPalette(false)}
         />
+        {/* {showCommandPalette && (
+          <ul className="absolute bg-white top-52 z-10 rounded-md shadow-md mt-4 w-full max-w-md">
+            {filteredHospitals.slice(0, 5).map((hospital) => (
+              <li
+                key={hospital.id}
+                className="p-2 hover:bg-gray-100 cursor-pointer"
+                onClick={() => setSearchTerm(hospital.name)}
+              >
+                {hospital.name}
+              </li>
+            ))}
+          </ul>
+        )} */}
+        <FindHospitalsNearMe onCityFetched={handleCityFetched} />
       </div>
 
       <ul className="text-left">

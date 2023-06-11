@@ -8,11 +8,9 @@ import {
   QuerySnapshot,
   DocumentData,
   updateDoc,
-  setDoc,
   doc,
   deleteDoc,
 } from "firebase/firestore";
-import { getAuth } from "firebase/auth";
 
 // Firebase configuration
 const firebaseConfig = {
@@ -26,7 +24,6 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
-export const auth = getAuth(app);
 
 interface HospitalData extends DocumentData {
   id: string;
