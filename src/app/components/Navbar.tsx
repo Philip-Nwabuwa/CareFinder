@@ -1,15 +1,19 @@
 "use client";
 import { useState } from "react";
 import { Dialog, Popover } from "@headlessui/react";
-import { AiOutlineMenu } from "react-icons/ai";
-import { AiOutlineClose } from "react-icons/ai";
+import { AiOutlineMenu, AiOutlineClose } from "react-icons/ai";
 import ThemeToggle from "./ThemeToggle";
 import Link from "next/link";
 import Image from "next/image";
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { useSelector } from "react-redux";
+import { RootState } from "../GlobalRedux/store";
 
 function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const country = useSelector(
+    (state: RootState) => state.findHospitalsNearMe.country
+  );
 
   return (
     <>
@@ -23,6 +27,7 @@ function Navbar() {
             <Link href="/" className="flex justify-center items-center">
               <Image width={50} height={50} src="/hospital.png" alt="Logo" />
               <h2 className="pl-2 text-lg text-bold">Care Finder</h2>
+              <p className="text-slate-400 text-xs pl-1">{country}</p>
             </Link>
           </Link>
         </div>

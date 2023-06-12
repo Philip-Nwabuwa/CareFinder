@@ -1,36 +1,61 @@
 "use client";
-
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchHospitals } from "../GlobalRedux/slice/hospitalSlice";
 import { AppDispatch, RootState } from "../GlobalRedux/store";
 import ExportCSV from "../components/ExportData/ExportCSV";
 import Link from "next/link";
+import axios from "axios";
 import LoadingAnimation from "../components/loadingAnimation";
-import FindHospitalsNearMe from "../components/GetLocation";
+import { BiLocationPlus } from "react-icons/bi";
+import { setCity, setCountry } from "../GlobalRedux/slice/locationSlice";
+import { Puff } from "react-loader-spinner";
 
 const Hospitals = () => {
   const dispatch = useDispatch<AppDispatch>();
   const hospitals: Hospital[] = useSelector(
     (state: RootState) => state.hospitals.hospitals
   );
+  const city = useSelector(
+    (state: RootState) => state.findHospitalsNearMe.city
+  );
   const status = useSelector((state: RootState) => state.hospitals.status);
   const error = useSelector((state: RootState) => state.hospitals.error);
+  const [loading, setLoading] = useState(false);
 
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   // Add state for search term
   const [searchTerm, setSearchTerm] = useState("");
 
-  // const [showCommandPalette, setShowCommandPalette] = useState(false);
-
-  const handleCityFetched = (city: string) => {
-    setSearchTerm(city);
-  };
-
   useEffect(() => {
     dispatch(fetchHospitals() as any);
-  }, [dispatch]);
+    if (city) {
+      setSearchTerm(city);
+    }
+  }, [dispatch, city]);
+
+  const handleFindHospitalsNearMe = () => {
+    if (navigator.geolocation) {
+      setLoading(true);
+      navigator.geolocation.getCurrentPosition(async (position) => {
+        const { latitude, longitude } = position.coords;
+        const response = await axios.get(
+          `https://api.bigdatacloud.net/data/reverse-geocode-client?latitude=${latitude}&longitude=${longitude}&localityLanguage=en`
+        );
+        const data = response.data;
+        const city = data.city;
+        const country = data.countryCode;
+
+        dispatch(setCountry(country));
+        dispatch(setCity(city));
+        setSearchTerm(city);
+        setLoading(false);
+      });
+    } else {
+      console.error("Geolocation is not supported by this browser.");
+    }
+  };
 
   if (status === "failed") {
     return (
@@ -77,51 +102,78 @@ const Hospitals = () => {
       <h1 className="uppercase text-2xl font-extrabold mb-5">
         List of Hospitals
       </h1>
-      <div className="flex flex-col md:flex-row items-start justify-between">
+      <div className="flex flex-col md:flex-row items-start md:items-center justify-center">
         <input
           type="text"
           className="input input-bordered w-full"
           placeholder="Search by city, state or name"
           onChange={(e) => {
             setSearchTerm(e.target.value);
-            // setShowCommandPalette(e.target.value.length > 0);
           }}
-          // onBlur={() => setShowCommandPalette(false)}
         />
-        {/* {showCommandPalette && (
-          <ul className="absolute bg-white top-52 z-10 rounded-md shadow-md mt-4 w-full max-w-md">
-            {filteredHospitals.slice(0, 5).map((hospital) => (
-              <li
-                key={hospital.id}
-                className="p-2 hover:bg-gray-100 cursor-pointer"
-                onClick={() => setSearchTerm(hospital.name)}
-              >
-                {hospital.name}
-              </li>
-            ))}
-          </ul>
-        )} */}
-        <FindHospitalsNearMe onCityFetched={handleCityFetched} />
+        <button
+          className="btn md:mt-0 md:ml-2 mt-2"
+          onClick={handleFindHospitalsNearMe}
+        >
+          Nearby Hospitals&nbsp;
+          {loading ? (
+            <div className="flex items-center ml-2 w-6 h-6">
+              <Puff
+                height={20}
+                width={20}
+                radius={1}
+                color="#fff"
+                ariaLabel="puff-loading"
+                visible={true}
+              />
+            </div>
+          ) : (
+            <div>
+              <BiLocationPlus className="ml-2 w-6 h-6" />
+            </div>
+          )}
+        </button>
       </div>
 
       <ul className="text-left">
-        {currentItems.map((hospital) => (
-          <li
-            key={hospital.id}
-            className="p-3  border border-solid border-black rounded-md my-2"
-          >
-            <div className="flex items-center justify-between">
-              <h2 className="font-bold">{hospital.name}</h2>
+        {loading ? (
+          <div className="flex justify-center items-center h-96">
+            <LoadingAnimation />
+          </div>
+        ) : (
+          <>
+            {currentItems.length === 0 && (
+              <div className="flex flex-col justify-center items-center text-center h-96">
+                <h2 className="text-2xl font-bold text-center">
+                  No Hospitals Found in {city}
+                </h2>
+                <p>
+                  Please try searching for another city or add a hospital{" "}
+                  <Link href="/add">
+                    <button className="text-blue-500">here</button>
+                  </Link>
+                </p>
+              </div>
+            )}
+            {currentItems.map((hospital) => (
+              <li
+                key={hospital.id}
+                className="p-3 border border-solid border-black rounded-md my-2"
+              >
+                <div className="flex items-center justify-between">
+                  <h2 className="font-bold">{hospital.name}</h2>
 
-              <Link className="ml-1" href={`/hospitals/${hospital.id}`}>
-                <button className="btn">Details</button>
-              </Link>
-            </div>
-            <p className="md:w-[60%] w-[70%] md:text-base text-xs">
-              {hospital.address}, {hospital.city}, {hospital.state}
-            </p>
-          </li>
-        ))}
+                  <Link className="ml-1" href={`/hospitals/${hospital.id}`}>
+                    <button className="btn">Details</button>
+                  </Link>
+                </div>
+                <p className="md:w-[60%] w-[70%] md:text-base text-xs">
+                  {hospital.address}, {hospital.city}, {hospital.state}
+                </p>
+              </li>
+            ))}
+          </>
+        )}
       </ul>
 
       <div className="flex md:flex-row flex-col justify-between items-center my-4">

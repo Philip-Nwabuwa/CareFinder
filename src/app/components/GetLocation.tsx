@@ -1,12 +1,10 @@
-import { useRouter } from "next/navigation";
 import { BiLocationPlus } from "react-icons/bi";
+import { useDispatch } from "react-redux";
+import { setCity } from "../GlobalRedux/slice/locationSlice";
 
-const FindHospitalsNearMe = ({
-  onCityFetched,
-}: {
-  onCityFetched: (city: string) => void;
-}) => {
-  const router = useRouter();
+const FindHospitalsNearMe = () => {
+  const dispatch = useDispatch();
+
   const handleFindHospitalsNearMe = () => {
     if (navigator.geolocation) {
       navigator.geolocation.getCurrentPosition(
@@ -17,8 +15,7 @@ const FindHospitalsNearMe = ({
           );
           const data = await response.json();
           const city = data.locality;
-          onCityFetched(city);
-          router.push(`/hospitals?city=${city}`);
+          dispatch(setCity(city));
         },
         (error) => {
           console.error(error);
@@ -30,7 +27,10 @@ const FindHospitalsNearMe = ({
   };
 
   return (
-    <button className="btn mt-2" onClick={handleFindHospitalsNearMe}>
+    <button
+      className="btn md:mt-0 md:ml-2 mt-2"
+      onClick={handleFindHospitalsNearMe}
+    >
       Nearby Hospitals <BiLocationPlus className="ml-2 w-6 h-6" />
     </button>
   );
