@@ -1,4 +1,5 @@
 import { useRouter } from "next/navigation";
+import { BiLocationPlus } from "react-icons/bi";
 
 const FindHospitalsNearMe = ({
   onCityFetched,
@@ -29,8 +30,8 @@ const FindHospitalsNearMe = ({
   };
 
   return (
-    <button className="btn mx-2" onClick={handleFindHospitalsNearMe}>
-      Nearby Hospitals
+    <button className="btn mt-2" onClick={handleFindHospitalsNearMe}>
+      Nearby Hospitals <BiLocationPlus className="ml-2 w-6 h-6" />
     </button>
   );
 };

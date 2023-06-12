@@ -60,8 +60,6 @@ const AddHospitalForm = () => {
     }
   };
 
-  console.log(hospitalData);
-
   return (
     <section className="md:h-screen mt-32 mx-3 mb-10">
       <h2 className="text-center uppercase text-xl font-extrabold">
@@ -189,7 +187,7 @@ const AddHospitalForm = () => {
             value={hospitalData.description}
             onChange={handleInputChange}
             className="textarea textarea-bordered h-24"
-            placeholder="details about the hospital"
+            placeholder="Details about the hospital"
           ></textarea>
         </div>
 

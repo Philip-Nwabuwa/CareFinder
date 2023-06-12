@@ -18,13 +18,13 @@ function Navbar() {
         aria-label="Global"
       >
         <div className="flex lg:flex-1">
-          <a href="#" className="-m-1.5 p-1.5">
+          <Link href="/" className="-m-1.5 p-1.5">
             <span className="sr-only">Your Company</span>
             <Link href="/" className="flex justify-center items-center">
               <Image width={50} height={50} src="/hospital.png" alt="Logo" />
               <h2 className="pl-2 text-lg text-bold">Care Finder</h2>
             </Link>
-          </a>
+          </Link>
         </div>
         <div className="flex lg:hidden">
           <button
@@ -86,10 +86,10 @@ function Navbar() {
         <div className="fixed inset-0 z-[80]" />
         <Dialog.Panel className=" fixed z-[80] inset-y-0 bg-[#191d24] right-0 w-full overflow-y-auto px-6 py-6 sm:max-w-sm sm:ring-1 sm:ring-gray-900/10">
           <div className="flex items-center justify-between">
-            <a href="#" className="-m-1.5 p-1.5">
+            <Link href="#" className="-m-1.5 p-1.5">
               <span className="sr-only">Your Company</span>
               <Image width={50} height={50} src="/hospital.png" alt="Logo" />
-            </a>
+            </Link>
             <button
               type="button"
               className="-m-2.5 rounded-md p-2.5 "

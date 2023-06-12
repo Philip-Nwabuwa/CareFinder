@@ -22,7 +22,7 @@ const Hospitals = () => {
   // Add state for search term
   const [searchTerm, setSearchTerm] = useState("");
 
-  const [showCommandPalette, setShowCommandPalette] = useState(false);
+  // const [showCommandPalette, setShowCommandPalette] = useState(false);
 
   const handleCityFetched = (city: string) => {
     setSearchTerm(city);
@@ -73,11 +73,11 @@ const Hospitals = () => {
   };
 
   return (
-    <div className="mt-32 text-center md:mx-6 mx-3">
-      <h1 className="uppercase text-xl font-extrabold mb-5">
+    <div className="mt-[7.5rem] text-center md:mx-6 mx-3">
+      <h1 className="uppercase text-2xl font-extrabold mb-5">
         List of Hospitals
       </h1>
-      <div className="flex flex-col md:flex-row items-center justify-between">
+      <div className="flex flex-col md:flex-row items-start justify-between">
         <input
           type="text"
           className="input input-bordered w-full"
@@ -126,26 +126,26 @@ const Hospitals = () => {
 
       <div className="flex md:flex-row flex-col justify-between items-center my-4">
         <ExportCSV />
-        <div className="flex md:mt-0 mt-3">
+        <div className="flex items-center md:mt-0 mt-3">
           <button
-            className="mx-2"
+            className="mx-2 btn"
             disabled={currentPage === 1}
             onClick={() => handlePageChange(currentPage - 1)}
           >
             Previous
-          </button>
-          <button
-            className="mx-2 "
-            disabled={currentItems.length < itemsPerPage}
-            onClick={() => handlePageChange(currentPage + 1)}
-          >
-            Next
           </button>
 
           <p className="mx-2">
             Current Page: {currentPage} /{" "}
             {Math.ceil(hospitals.length / itemsPerPage)}
           </p>
+          <button
+            className="mx-2 btn"
+            disabled={currentItems.length < itemsPerPage}
+            onClick={() => handlePageChange(currentPage + 1)}
+          >
+            Next
+          </button>
 
           <p className="mx-2 hidden md:flex ">
             Total Hospitals: {hospitals.length}

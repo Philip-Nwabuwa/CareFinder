@@ -87,10 +87,8 @@ const Page = ({
     window.open(`tel:${hospital.phoneNumber}`);
   };
 
-  console.log(hospital.website);
-
   return (
-    <section className="flex flex-col lg:grid lg:grid-cols-6 lg:gap-6 mx-6 mt-32 h-screen md:h-[34rem]">
+    <section className="flex flex-col lg:grid lg:grid-cols-6 lg:gap-6 mx-6 mt-32 mb-10 sm:mb-20 lg:mb-0 md:h-[34rem]">
       <div className="col-span-5">
         <div>
           <h1 className="uppercase font-bold text-3xl text-center">
@@ -108,7 +106,7 @@ const Page = ({
             </span>
           </p>
 
-          <div className="md:grid md:grid-cols-3 flex flex-col gap-4 lg:mr-5">
+          <div className="lg:grid lg:grid-cols-3 flex flex-col gap-4 lg:mr-5">
             <Link href={hospital.website} target="_blank" className="btn my-3">
               Visit Website
               <AiOutlineSwapRight className="ml-2 w-7 h-7" />
