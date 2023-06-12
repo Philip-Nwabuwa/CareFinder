@@ -76,7 +76,7 @@ export const addHospitalToFirestore = async (
     const hospitalsCollection = collection(db, "hospital");
 
     await addDoc(hospitalsCollection, {
-      name: hospitalData.hospitalName,
+      name: hospitalData.name,
       address: hospitalData.address,
       phoneNumber: hospitalData.phoneNumber,
       createdAt: new Date(),

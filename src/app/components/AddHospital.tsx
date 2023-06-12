@@ -2,12 +2,10 @@
 
 import { useState } from "react";
 import { addHospitalToFirestore } from "../lib/firestore";
-import Link from "next/link";
-import { AiOutlineWarning } from "react-icons/ai";
 
 const AddHospitalForm = () => {
-  const [hospitalData, setHospitalData] = useState({
-    hospitalName: "",
+  const [hospitalData, setHospitalData] = useState<HospitalData>({
+    name: "",
     address: "",
     phoneNumber: "",
     website: "",
@@ -26,39 +24,24 @@ const AddHospitalForm = () => {
     setHospitalData((prevData) => ({ ...prevData, [name]: value }));
   };
 
-  const validateForm = () => {
-    if (!hospitalData.hospitalName) {
-      setErrorMessage("Hospital name is required.");
-      return false;
-    }
-    if (!hospitalData.address) {
-      setErrorMessage("Address is required.");
-      return false;
-    }
-    if (!hospitalData.city) {
-      setErrorMessage("City is required.");
-      return false;
-    }
-    if (!hospitalData.state) {
-      setErrorMessage("State is required.");
-      return false;
-    }
-    if (!hospitalData.phoneNumber) {
-      setErrorMessage("Phone number is required.");
-      return false;
-    }
-    return true;
-  };
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    if (!validateForm()) {
+    if (
+      !hospitalData.name ||
+      !hospitalData.address ||
+      !hospitalData.phoneNumber ||
+      !hospitalData.website ||
+      !hospitalData.state ||
+      !hospitalData.city ||
+      !hospitalData.description
+    ) {
+      setErrorMessage("Please fill all the fields");
       return;
     }
     try {
       await addHospitalToFirestore(hospitalData);
       setHospitalData({
-        hospitalName: "",
+        name: "",
         address: "",
         phoneNumber: "",
         website: "",
@@ -76,6 +59,8 @@ const AddHospitalForm = () => {
       }
     }
   };
+
+  console.log(hospitalData);
 
   return (
     <section className="md:h-screen mt-32 mx-3 mb-10">
@@ -95,16 +80,16 @@ const AddHospitalForm = () => {
           </label>{" "}
           <input
             type="text"
-            id="hospitalName"
-            name="hospitalName"
+            id="name"
+            name="name"
             placeholder="Name"
             className="input input-bordered w-full"
-            value={hospitalData.hospitalName}
+            value={hospitalData.name}
             onChange={handleInputChange}
           />
         </div>
 
-        <div className="form-control  my-4 w-full max-w-3xl">
+        <div className="form-control my-4 w-full max-w-3xl">
           <label className="label" htmlFor="address">
             <span className="label-text">
               Hospital Address<span className="text-red-500">*</span>
@@ -156,7 +141,7 @@ const AddHospitalForm = () => {
           </div>
         </div>
 
-        <div className="w-full max-w-3xl flex mt-4  md:flex-row flex-col gap-5">
+        <div className="w-full max-w-3xl flex mt-4 md:flex-row flex-col gap-5">
           <div className="form-control w-full">
             <label className="label" htmlFor="phoneNumber">
               <span className="label-text">
@@ -207,38 +192,13 @@ const AddHospitalForm = () => {
             placeholder="details about the hospital"
           ></textarea>
         </div>
-        <label
-          htmlFor="my_modal_6"
-          className="btn w-full max-w-3xl mt-4 md:mb-4"
-        >
-          <button type="submit">Submit</button>
-        </label>
 
-        <input type="checkbox" id="my_modal_6" className="modal-toggle" />
-        <div className="modal">
-          <div className="modal-box">
-            {successMessage && (
-              <p className="py-4">successfully added Hospital</p>
-            )}
-            {errorMessage && (
-              <p className="py-4 flex items-center">
-                <AiOutlineWarning className="mr-2 text-red-600 text-2xl" />
-                {errorMessage}
-              </p>
-            )}
+        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
-            <div className="modal-action">
-              <label htmlFor="my_modal_6" className="btn">
-                {successMessage && (
-                  <Link href="/hospitals">
-                    <p className="py-4">Return</p>
-                  </Link>
-                )}
-                {errorMessage && <p className="py-4">Retry</p>}
-              </label>
-            </div>
-          </div>
-        </div>
+        {successMessage && <p className="text-green-500">{successMessage}</p>}
+        <button className="btn w-full max-w-3xl mt-4 md:mb-4" type="submit">
+          Submit
+        </button>
       </form>
     </section>
   );

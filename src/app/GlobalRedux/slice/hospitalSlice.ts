@@ -43,7 +43,7 @@ export const fetchHospitals = createAsyncThunk<Hospital[]>(
     const hospitals = await fetchHospitalsFromFirestore();
     return hospitals.map((hospital) => ({
       id: hospital.id,
-      phone: hospital.phone,
+      phoneNumber: hospital.phoneNumber,
       name: hospital.name,
       address: hospital.address,
       city: hospital.city,

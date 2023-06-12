@@ -5,6 +5,7 @@ import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import { ClerkProvider } from "@clerk/nextjs";
 import { dark } from "@clerk/themes";
+import Head from "next/head";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -26,7 +27,9 @@ export default function RootLayout({
     >
       <Providers>
         <html lang="en" className={inter.className}>
-          <meta httpEquiv="X-UA-Compatible" content="IE=edge" />
+          <Head>
+            <meta charSet="utf-8" />
+          </Head>
           <body>
             <Navbar />
             {children}

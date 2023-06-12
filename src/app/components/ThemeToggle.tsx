@@ -27,10 +27,10 @@ function ThemeToggle(): JSX.Element {
     }
   }, [theme]);
   return (
-    <label className="swap swap-rotate">
+    <label className="swap swap-rotate text-white">
       <input onChange={handleToggle} type="checkbox" />
       <svg
-        className="swap-on fill-current w-7 h-7"
+        className="swap-on fill-current w-7 h-7 "
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 24 24"
       >

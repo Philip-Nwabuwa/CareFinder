@@ -40,17 +40,14 @@ function Navbar() {
           <Link href="/hospitals" className="text-sm font-semibold leading-6 ">
             Hospitals
           </Link>
-          <Link href="#" className="text-sm font-semibold leading-6 ">
-            Documentaion
-          </Link>
-          <Link href="/about" className="text-sm font-semibold leading-6 ">
-            About
-          </Link>
-
           <Link
-            href="/hospitals/add"
+            href="https://medium.com/@philipnwabuwa/carefinder-app-documentation-f93f5ba76eb6"
             className="text-sm font-semibold leading-6 "
           >
+            Documentaion
+          </Link>
+
+          <Link href="/add" className="text-sm font-semibold leading-6 ">
             Add Hospital
           </Link>
 
@@ -99,7 +96,10 @@ function Navbar() {
               onClick={() => setMobileMenuOpen(false)}
             >
               <span className="sr-only">Close menu</span>
-              <AiOutlineClose className="h-6 w-6" aria-hidden="true" />
+              <AiOutlineClose
+                className="h-6 w-6 text-white"
+                aria-hidden="true"
+              />
             </button>
           </div>
           <div className="mt-6 flow-root">
@@ -114,21 +114,15 @@ function Navbar() {
                 </Link>
                 <Link
                   onClick={() => setMobileMenuOpen(false)}
-                  href="/"
+                  href="https://medium.com/@philipnwabuwa/carefinder-app-documentation-f93f5ba76eb6"
                   className="-mx-3 text-white block rounded-lg px-3 py-2 text-base font-semibold leading-7  hover:bg-gray-50 hover:text-gray-900"
                 >
                   Documentation
                 </Link>
+
                 <Link
                   onClick={() => setMobileMenuOpen(false)}
-                  href="/about"
-                  className="-mx-3 text-white block rounded-lg px-3 py-2 text-base font-semibold leading-7  hover:bg-gray-50 hover:text-gray-900"
-                >
-                  About
-                </Link>
-                <Link
-                  onClick={() => setMobileMenuOpen(false)}
-                  href="/hospitals/add"
+                  href="/add"
                   className="-mx-3 text-white block rounded-lg px-3 py-2 text-base font-semibold leading-7  hover:bg-gray-50 hover:text-gray-900"
                 >
                   Add Hospital
@@ -142,7 +136,7 @@ function Navbar() {
                   <button>
                     <Link
                       href="/sign-in"
-                      className="text-sm font-semibold leading-6 "
+                      className="text-sm font-semibold leading-6 text-white"
                     >
                       Log in
                     </Link>
