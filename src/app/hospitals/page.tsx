@@ -65,16 +65,6 @@ const Hospitals = () => {
     );
   }
 
-  if (status === "loading") {
-    return (
-      <div className="h-screen flex justify-center items-center">
-        <div className="w-16 h-16">
-          <LoadingAnimation />
-        </div>
-      </div>
-    );
-  }
-
   // Calculate the index of the first and last item on the current page
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
@@ -98,116 +88,126 @@ const Hospitals = () => {
   };
 
   return (
-    <div className="mt-[7.5rem] text-center md:mx-6 mx-3">
-      <h1 className="uppercase text-2xl font-extrabold mb-5">
-        List of Hospitals
-      </h1>
-      <div className="flex flex-col md:flex-row items-start md:items-center justify-center">
-        <input
-          type="text"
-          className="input input-bordered w-full"
-          placeholder="Search by city, state or name"
-          onChange={(e) => {
-            setSearchTerm(e.target.value);
-          }}
-        />
-        <button
-          className="btn md:mt-0 md:ml-2 mt-2"
-          onClick={handleFindHospitalsNearMe}
-        >
-          Nearby Hospitals&nbsp;
-          {loading ? (
-            <div className="flex items-center ml-2 w-6 h-6">
-              <Puff
-                height={20}
-                width={20}
-                radius={1}
-                color="#fff"
-                ariaLabel="puff-loading"
-                visible={true}
-              />
-            </div>
-          ) : (
-            <div>
-              <BiLocationPlus className="ml-2 w-6 h-6" />
-            </div>
-          )}
-        </button>
-      </div>
-
-      <ul className="text-left">
-        {loading ? (
-          <div className="flex justify-center items-center h-96">
+    <div>
+      {status === "loading" ? (
+        <div className="h-screen flex justify-center items-center">
+          <div className="w-16 h-16">
             <LoadingAnimation />
           </div>
-        ) : (
-          <>
-            {currentItems.length === 0 && (
-              <div className="flex flex-col justify-center items-center text-center h-96">
-                <h2 className="text-2xl font-bold text-center">
-                  No Hospitals Found in {city}
-                </h2>
-                <p>
-                  Please try searching for another city or add a hospital{" "}
-                  <Link href="/add">
-                    <button className="text-blue-500">here</button>
-                  </Link>
-                </p>
-              </div>
-            )}
-            {currentItems.map((hospital) => (
-              <li
-                key={hospital.id}
-                className="p-3 border border-solid border-black rounded-md my-2"
-              >
-                <div className="flex items-center justify-between">
-                  <h2 className="font-bold">{hospital.name}</h2>
-
-                  <Link className="ml-1" href={`/hospitals/${hospital.id}`}>
-                    <button className="btn">Details</button>
-                  </Link>
-                </div>
-                <p className="md:w-[60%] w-[70%] md:text-base text-xs">
-                  {hospital.address}, {hospital.city}, {hospital.state}
-                </p>
-              </li>
-            ))}
-          </>
-        )}
-      </ul>
-
-      <div className="flex md:flex-row flex-col justify-between items-center my-4">
-        <ExportCSV />
-        <div className="flex items-center md:mt-0 mt-3">
-          <button
-            className="mx-2 btn"
-            disabled={currentPage === 1}
-            onClick={() => handlePageChange(currentPage - 1)}
-          >
-            Previous
-          </button>
-
-          <p className="mx-2">
-            Current Page: {currentPage} /{" "}
-            {Math.ceil(hospitals.length / itemsPerPage)}
-          </p>
-          <button
-            className="mx-2 btn"
-            disabled={currentItems.length < itemsPerPage}
-            onClick={() => handlePageChange(currentPage + 1)}
-          >
-            Next
-          </button>
-
-          <p className="mx-2 hidden md:flex ">
-            Total Hospitals: {hospitals.length}
-          </p>
-
-          <p className="mx-2 hidden md:flex">
-            Total Pages: {Math.ceil(hospitals.length / itemsPerPage)}
-          </p>
         </div>
-      </div>
+      ) : (
+        <div className="mt-[7.5rem] text-center md:mx-6 mx-3">
+          <h1 className="uppercase text-2xl font-extrabold mb-5">
+            List of Hospitals
+          </h1>
+          <div className="flex flex-col md:flex-row items-start md:items-center justify-center">
+            <input
+              type="text"
+              className="input input-bordered w-full"
+              placeholder="Search by city, state or name"
+              onChange={(e) => {
+                setSearchTerm(e.target.value);
+              }}
+            />
+            <button
+              className="btn md:mt-0 md:ml-2 mt-2"
+              onClick={handleFindHospitalsNearMe}
+            >
+              Nearby Hospitals&nbsp;
+              {loading ? (
+                <div className="flex items-center ml-2 w-6 h-6">
+                  <Puff
+                    height={20}
+                    width={20}
+                    radius={1}
+                    color="#fff"
+                    ariaLabel="puff-loading"
+                    visible={true}
+                  />
+                </div>
+              ) : (
+                <div>
+                  <BiLocationPlus className="ml-2 w-6 h-6" />
+                </div>
+              )}
+            </button>
+          </div>
+
+          <ul className="text-left">
+            {loading ? (
+              <div className="flex justify-center items-center h-96">
+                <LoadingAnimation />
+              </div>
+            ) : (
+              <>
+                {currentItems.length === 0 && (
+                  <div className="flex flex-col justify-center items-center text-center h-96">
+                    <h2 className="text-2xl font-bold text-center">
+                      No Hospitals Found in {city}
+                    </h2>
+                    <p>
+                      Please try searching for another city or add a hospital{" "}
+                      <Link href="/add">
+                        <button className="text-blue-500">here</button>
+                      </Link>
+                    </p>
+                  </div>
+                )}
+                {currentItems.map((hospital) => (
+                  <li
+                    key={hospital.id}
+                    className="p-3 border border-solid border-black rounded-md my-2"
+                  >
+                    <div className="flex items-center justify-between">
+                      <h2 className="font-bold">{hospital.name}</h2>
+
+                      <Link className="ml-1" href={`/hospitals/${hospital.id}`}>
+                        <button className="btn">Details</button>
+                      </Link>
+                    </div>
+                    <p className="md:w-[60%] w-[70%] md:text-base text-xs">
+                      {hospital.address}, {hospital.city}, {hospital.state}
+                    </p>
+                  </li>
+                ))}
+              </>
+            )}
+          </ul>
+
+          <div className="flex md:flex-row flex-col justify-between items-center my-4">
+            <ExportCSV />
+            <div className="flex items-center md:mt-0 mt-3">
+              <button
+                className="mx-2 btn"
+                disabled={currentPage === 1}
+                onClick={() => handlePageChange(currentPage - 1)}
+              >
+                Previous
+              </button>
+
+              <p className="mx-2">
+                Current Page: {currentPage} /{" "}
+                {Math.ceil(hospitals.length / itemsPerPage)}
+              </p>
+              <button
+                className="mx-2 btn"
+                disabled={currentItems.length < itemsPerPage}
+                onClick={() => handlePageChange(currentPage + 1)}
+              >
+                Next
+              </button>
+
+              <p className="mx-2 hidden md:flex ">
+                Total Hospitals: {hospitals.length}
+              </p>
+
+              <p className="mx-2 hidden md:flex">
+                Total Pages: {Math.ceil(hospitals.length / itemsPerPage)}
+              </p>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 };
