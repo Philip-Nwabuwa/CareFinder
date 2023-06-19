@@ -4,7 +4,7 @@ import { BsMedium } from "react-icons/bs";
 
 function Footer() {
   return (
-    <footer className="footer items-center p-4 bg-neutral text-neutral-content">
+    <footer className="footer items-center p-4 mt-10 bg-neutral text-neutral-content">
       <div className="items-center grid-flow-col">
         <img src="/logo.png" className="w-10 h-10" alt="logo" />
         <p>Copyright © 2023 - All right reserved</p>
