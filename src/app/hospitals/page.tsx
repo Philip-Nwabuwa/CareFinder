@@ -161,9 +161,7 @@ const Hospitals = () => {
                     className="p-3 border border-solid border-black rounded-md mt-2 mb-5"
                   >
                     <div className="flex items-center justify-between">
-                      <h2 className="font-bold">
-                        {hospital.name} ({hospital.nickname})
-                      </h2>
+                      <h2 className="font-bold">{hospital.name}</h2>
 
                       <Link className="ml-1" href={`/hospitals/${hospital.id}`}>
                         <button className="btn">Details</button>
