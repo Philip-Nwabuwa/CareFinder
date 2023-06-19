@@ -137,9 +137,11 @@ const Page = ({
                   Are you sure you want to delete this hospital?
                 </h2>
                 <div className="flex justify-center items-center gap-4 mt-4">
-                  <button onClick={handleDelete} className="btn">
-                    <Link href="/hospitals">Yes</Link>
-                  </button>
+                  <Link href="/hospitals">
+                    <button onClick={handleDelete} className="btn">
+                      Yes
+                    </button>
+                  </Link>
                   <button onClick={closeModal} className="btn">
                     No
                   </button>

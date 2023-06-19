@@ -106,7 +106,7 @@ const Hospitals = () => {
             <input
               type="text"
               className="input input-bordered w-full"
-              placeholder="Search by city, state or name"
+              placeholder="Search by city, state, nickname or name"
               onChange={(e) => {
                 setSearchTerm(e.target.value);
               }}
@@ -162,7 +162,7 @@ const Hospitals = () => {
                   >
                     <div className="flex items-center justify-between">
                       <h2 className="font-bold">
-                        {hospital.name} {hospital.nickname}
+                        {hospital.name} ({hospital.nickname})
                       </h2>
 
                       <Link className="ml-1" href={`/hospitals/${hospital.id}`}>
