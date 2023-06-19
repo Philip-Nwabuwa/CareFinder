@@ -50,6 +50,7 @@ export const fetchHospitals = createAsyncThunk<Hospital[]>(
       state: hospital.state,
       website: hospital.website,
       description: hospital.description,
+      nickname: hospital.nickname,
     }));
   }
 );

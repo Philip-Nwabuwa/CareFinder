@@ -92,7 +92,7 @@ const Page = ({
       <div className="col-span-5">
         <div>
           <h1 className="uppercase font-bold text-3xl text-center">
-            {hospital.name}
+            {hospital.name} ({hospital.nickname})
           </h1>
           <h3 className="my-5 font-semibold text-lg md:text-xl">
             Address: {hospital.address}, {hospital.city}, {hospital.state}
@@ -138,7 +138,7 @@ const Page = ({
                 </h2>
                 <div className="flex justify-center items-center gap-4 mt-4">
                   <button onClick={handleDelete} className="btn">
-                    <Link href="/hospital">Yes</Link>
+                    <Link href="/hospitals">Yes</Link>
                   </button>
                   <button onClick={closeModal} className="btn">
                     No

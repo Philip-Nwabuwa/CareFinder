@@ -74,7 +74,9 @@ const Hospitals = () => {
     (hospital) =>
       hospital.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
       hospital.city.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      hospital.state.toLowerCase().includes(searchTerm.toLowerCase())
+      hospital.state.toLowerCase().includes(searchTerm.toLowerCase()) ||
+      (hospital.nickname &&
+        hospital.nickname.toLowerCase().includes(searchTerm.toLowerCase()))
   );
 
   // Slice the hospitals array to only include items for the current page
@@ -96,7 +98,7 @@ const Hospitals = () => {
           </div>
         </div>
       ) : (
-        <div className="mt-[7.5rem] text-center md:mx-6 mx-3">
+        <div className="mt-[7.5rem] mb-10 text-center md:mx-6 mx-3">
           <h1 className="uppercase text-2xl font-extrabold mb-5">
             List of Hospitals
           </h1>
@@ -156,10 +158,12 @@ const Hospitals = () => {
                 {currentItems.map((hospital) => (
                   <li
                     key={hospital.id}
-                    className="p-3 border border-solid border-black rounded-md my-2"
+                    className="p-3 border border-solid border-black rounded-md mt-2 mb-5"
                   >
                     <div className="flex items-center justify-between">
-                      <h2 className="font-bold">{hospital.name}</h2>
+                      <h2 className="font-bold">
+                        {hospital.name} {hospital.nickname}
+                      </h2>
 
                       <Link className="ml-1" href={`/hospitals/${hospital.id}`}>
                         <button className="btn">Details</button>
